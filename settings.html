@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Innstillinger – Tilgjengelighet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-fjord: #0099D8;
+      --neutral-snow: #F8FAFB;
+      --neutral-ice: #E5F4FA;
+      --text-dark: #1E3A5F;
+      --text-mid: #4A6B8A;
+      --accent-glacier: #66BFEB;
+      --danger: #D97757;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Work Sans',-apple-system,system-ui,sans-serif;background:linear-gradient(135deg,var(--neutral-snow) 0%,var(--neutral-ice) 100%);color:var(--text-dark);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+    .wrap{max-width:900px;width:100%}
+    .card{background:rgba(255,255,255,.92);backdrop-filter:blur(18px);border-radius:24px;padding:2.25rem;box-shadow:0 20px 60px rgba(44,56,50,.12),0 8px 16px rgba(44,56,50,.08)}
+    h1{font-family:'DM Serif Display',serif;font-size:2.6rem;font-weight:400;letter-spacing:-.02em;margin-bottom:.35rem}
+    .sub{color:var(--text-mid);margin-bottom:1.75rem}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .group{border:1px solid rgba(30,58,95,.08);border-radius:18px;padding:1rem 1.1rem;background:rgba(255,255,255,.7)}
+    .group h2{font-size:1.1rem;font-weight:500;margin-bottom:.6rem}
+    label{display:block;font-size:.95rem;color:var(--text-mid);margin-bottom:.35rem}
+    input,select,textarea{width:100%;padding:.8rem .85rem;border-radius:14px;border:1px solid rgba(30,58,95,.15);background:#fff;color:var(--text-dark);font:inherit}
+    textarea{min-height:78px;resize:vertical}
+    .help{font-size:.9rem;color:var(--text-mid);margin-top:.4rem;line-height:1.35}
+
+    .row{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.25rem}
+    .btn{background:var(--primary-fjord);color:#fff;border:none;border-radius:14px;padding:.85rem 1.1rem;font-weight:500;cursor:pointer;box-shadow:0 10px 25px rgba(0,153,216,.25)}
+    .btn.secondary{background:rgba(30,58,95,.08);color:var(--text-dark);box-shadow:none}
+    .notice{margin-top:1rem;border-left:4px solid var(--accent-glacier);background:rgba(123,179,224,.12);border-radius:12px;padding:1rem}
+    .notice.danger{border-left-color:var(--danger);background:rgba(217,119,87,.12)}
+
+    .tiny{font-size:.9rem;color:var(--text-mid)}
+    code{background:rgba(30,58,95,.06);padding:.1rem .35rem;border-radius:8px}
+
+    @media (max-width: 820px){
+      .grid{grid-template-columns:1fr}
+      body{padding:1.2rem}
+      .card{padding:1.6rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Innstillinger</h1>
+      <p class="sub">Dette er en egen side så du kan styre skjermen eksternt (f.eks. fra mobil).</p>
+
+      <div class="grid">
+        <div class="group">
+          <h2>📅 Foretrukket: Outlook/ICS</h2>
+          <label for="calendarUrl">Delt kalender-URL (ICS)</label>
+          <input id="calendarUrl" type="url" placeholder="https://outlook.office365.com/owa/calendar/.../calendar.ics" />
+          <p class="help">Hvis dette er fylt inn, vil <code>index.html</code> bruke ICS først (ingen innlogging). Merk: noen Outlook-lenker kan blokkeres av CORS i nettleseren.</p>
+
+          <label for="refreshInterval" style="margin-top:.9rem">Oppdateringsfrekvens</label>
+          <select id="refreshInterval">
+            <option value="60000">Hvert minutt</option>
+            <option value="300000">Hvert 5. minutt</option>
+            <option value="600000">Hvert 10. minutt</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <h2>🔐 Alternativ: Microsoft Graph</h2>
+          <label for="clientId">Azure Client ID</label>
+          <input id="clientId" type="text" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+          <p class="help">Brukes kun hvis ICS-URL er tom. (MSAL/Graph som i originalen.)</p>
+
+          <label for="showDetails" style="margin-top:.9rem">Standard: vis møtedetaljer</label>
+          <select id="showDetails">
+            <option value="0">Nei</option>
+            <option value="1">Ja</option>
+          </select>
+        </div>
+
+        <div class="group">
+          <h2>🌐 Fjernstyring</h2>
+          <p class="help" style="margin:0">
+            Du kan oppdatere innstillinger via URL-parametre og laste siden – nyttig for «remote control»:
+          </p>
+          <p class="help">
+            <code>settings.html?calendarUrl=...&refreshInterval=60000</code><br>
+            <code>settings.html?clientId=...&showDetails=1</code>
+          </p>
+          <p class="help">Parametre som finnes i URL blir lagret automatisk (uten å trykke «Lagre»). For å tømme alt: trykk «Nullstill».</p>
+        </div>
+
+        <div class="group">
+          <h2>🧾 Eksport</h2>
+          <label for="exportBox">Gjeldende konfig (copy/paste)</label>
+          <textarea id="exportBox" readonly></textarea>
+          <p class="help">Dette er det som ligger i <code>localStorage</code> under nøkkelen <code>tilgjenge-config</code>.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn" onclick="save()">💾 Lagre</button>
+        <button class="btn secondary" onclick="resetAll()">🧹 Nullstill</button>
+        <a class="btn secondary" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">⬅ Til skjerm</a>
+      </div>
+
+      <div id="msg" class="notice" style="display:none"></div>
+      <div class="tiny" style="margin-top:1rem">Tips: For GitHub Pages – sørg for at både <code>index.html</code> og <code>settings.html</code> ligger i rotmappa.</div>
+    </div>
+  </div>
+
+<script>
+  function readConfig(){
+    const raw = localStorage.getItem('tilgjenge-config');
+    return raw ? JSON.parse(raw) : {};
+  }
+
+  function writeConfig(cfg){
+    localStorage.setItem('tilgjenge-config', JSON.stringify(cfg));
+  }
+
+  function setMsg(text, danger=false){
+    const el = document.getElementById('msg');
+    el.textContent = text;
+    el.className = danger ? 'notice danger' : 'notice';
+    el.style.display = 'block';
+  }
+
+  function fillForm(){
+    const cfg = readConfig();
+    document.getElementById('calendarUrl').value = cfg.calendarUrl || localStorage.getItem('calendarUrl') || '';
+    document.getElementById('refreshInterval').value = String(cfg.refreshInterval || localStorage.getItem('refreshInterval') || 60000);
+    document.getElementById('clientId').value = cfg.clientId || '';
+    document.getElementById('showDetails').value = (cfg.showDetails ? '1' : '0');
+    document.getElementById('exportBox').value = JSON.stringify({
+      calendarUrl: document.getElementById('calendarUrl').value,
+      refreshInterval: Number(document.getElementById('refreshInterval').value),
+      clientId: document.getElementById('clientId').value,
+      showDetails: document.getElementById('showDetails').value === '1',
+      timezone: 'Europe/Oslo'
+    }, null, 2);
+  }
+
+  function applyUrlParams(){
+    const p = new URLSearchParams(window.location.search);
+    if ([...p.keys()].length === 0) return false;
+
+    const cfg = readConfig();
+
+    if (p.has('calendarUrl')) cfg.calendarUrl = p.get('calendarUrl') || '';
+    if (p.has('refreshInterval')) cfg.refreshInterval = Number(p.get('refreshInterval')) || 60000;
+    if (p.has('clientId')) cfg.clientId = p.get('clientId') || '';
+    if (p.has('showDetails')) cfg.showDetails = (p.get('showDetails') === '1' || p.get('showDetails') === 'true');
+
+    // bakoverkompat: eldre nøkler
+    if (cfg.calendarUrl) localStorage.setItem('calendarUrl', cfg.calendarUrl);
+    if (cfg.refreshInterval) localStorage.setItem('refreshInterval', String(cfg.refreshInterval));
+
+    writeConfig(cfg);
+    return true;
+  }
+
+  function save(){
+    const cfg = {
+      calendarUrl: document.getElementById('calendarUrl').value.trim(),
+      refreshInterval: Number(document.getElementById('refreshInterval').value) || 60000,
+      clientId: document.getElementById('clientId').value.trim(),
+      showDetails: document.getElementById('showDetails').value === '1',
+      timezone: 'Europe/Oslo'
+    };
+
+    // bakoverkompat med den enkle versjonen
+    if (cfg.calendarUrl) localStorage.setItem('calendarUrl', cfg.calendarUrl);
+    localStorage.setItem('refreshInterval', String(cfg.refreshInterval));
+
+    writeConfig(cfg);
+    fillForm();
+    setMsg('Lagret! Åpne skjermen (index.html) for å se endringen.');
+  }
+
+  function resetAll(){
+    localStorage.removeItem('tilgjenge-config');
+    localStorage.removeItem('calendarUrl');
+    localStorage.removeItem('refreshInterval');
+    localStorage.removeItem('tilgjenge-showDetails');
+    fillForm();
+    setMsg('Nullstilt.');
+  }
+
+  window.addEventListener('load', () => {
+    const didApply = applyUrlParams();
+    fillForm();
+    if (didApply) setMsg('URL-parametre ble lagret automatisk.');
+  });
+</script>
+</body>
+</html>
