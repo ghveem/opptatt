@@ -1,7 +1,7 @@
 # Tilgjengeleg? - Status Display System 🟢
 
 Eit enkelt og elegant system for å vise din tilgjenge til kollegaer.
-Laga for å bli vist på ein [ipad i begrensa tilgangsmodus](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados), men du kan bruke kva skjerm som helst. 
+Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados), men du kan bruke kva skjerm som helst. 
 
 ## 📋 To separate sider
 
