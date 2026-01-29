@@ -89,10 +89,10 @@ Korleis få ICS-URL:
 
 | Status | Farge | Melding |
 |--------|-------|---------|
-| Tilgjengeleg | 🟢 | Bank gjerne på |
-| Oppteken | 🔴 | Ikkje forstyrr |
-| I møte | 🔵 | Prøv igjen etter møtet |
-| Ute | 🟡 | Send gjerne ein e-post |
+| Tilgjengeleg | 🟢 | Bank gjerne på. |
+| Oppteken | 🔴 | Ikkje forstyrr. |
+| I møte | 🔵 | Prøv igjen etter møtet. |
+| Ute | 🟡 | Send gjerne ein e-post. |
 
 ## 🆘 Feilsøking
 
