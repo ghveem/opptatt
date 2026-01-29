@@ -65,11 +65,21 @@ Innstillingar (telefon): https://dittbrukarnamn.github.io/tilgjenge-status/innst
 ## 📅 Outlook-integrering
 
 Korleis få ICS-URL:
+### Alternativ 1: 
 1. Outlook Calendar → Høgreklikk på kalender
 2. "Delingsinnstillingar" → "Publiser"
 3. Vel "Kan sjå når eg er oppteken"
 4. Kopier ICS-lenka
 5. Lim inn i innstillingarsida
+
+### Alternativ 2: 
+1. Rett over kalenderen på nett, trykk Kalender-innstillingar
+2. Trykk Delte kalenderar
+3. Publiser ein kalender
+4. Velg kalenderen du vil bruke, velg "Kan vise når eg er oppteken"
+5. Trykk publiser. 
+6. Kopier lenka som sluttar med .ICS.
+
 
 ## 🎨 Statusar
 
@@ -99,4 +109,4 @@ Open source - bruk fritt!
 
 ---
 
-**Versjon:** 2.0 | **Laga for:** Kvinnherad kommune
+**Versjon:** 2.0 | **Laga av:** mest KI, litt Guttorm. 
