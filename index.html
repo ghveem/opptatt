@@ -379,8 +379,21 @@
         async function fetchCalendarStatus(calendarUrl) {
             showSyncIndicator();
             try {
-                const response = await fetch(calendarUrl);
-                const icsData = await response.text();
+                // Try direct fetch first
+                let response;
+                let icsData;
+                
+                try {
+                    response = await fetch(calendarUrl);
+                    icsData = await response.text();
+                } catch (corsError) {
+                    // If CORS error, try with proxy
+                    console.log('Direct fetch failed, trying with CORS proxy...');
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(calendarUrl);
+                    response = await fetch(proxyUrl);
+                    icsData = await response.text();
+                }
+
                 const events = parseICS(icsData);
                 const currentEvent = getCurrentEvent(events);
                 const upcomingEvents = getUpcomingEvents(events, 12);
@@ -399,7 +412,11 @@
                 displayUpcomingEvents(upcomingEvents);
             } catch (error) {
                 console.error('Calendar sync error:', error);
+                // Fall back to manual status
                 loadAndDisplayStatus();
+                
+                // Show error in console but don't alert user
+                console.warn('Kunne ikkje hente kalenderdata. Brukar manuell status i staden.');
             }
             hideSyncIndicator();
         }

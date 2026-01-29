@@ -316,7 +316,13 @@
             </div>
 
             <button class="btn" onclick="enableCalendarSync()">🔄 Aktiver kalender-synk</button>
+            <button class="btn btn-secondary" onclick="testCalendarSync()" style="margin-top: 0.75rem;">🧪 Test kalender-tilkopling</button>
             <button class="btn btn-secondary" onclick="disableCalendarSync()" style="margin-top: 0.75rem;">⏹️ Stopp kalender-synk</button>
+
+            <div id="testResult" class="info-box" style="display: none; margin-top: 1rem;">
+                <strong id="testResultTitle"></strong>
+                <p id="testResultMessage" style="margin-top: 0.5rem;"></p>
+            </div>
 
             <div class="info-box">
                 <strong>Korleis få kalender-URL:</strong>
@@ -329,6 +335,7 @@
                     <li>Lim inn her</li>
                 </ol>
                 <p style="margin-top: 0.75rem;"><strong>Viktig:</strong> Når kalender-synk er aktivert, vil manuell status bli overstyrt av kalenderen din.</p>
+                <p style="margin-top: 0.5rem;"><strong>CORS-problem?</strong> Viss direkte tilgang ikkje fungerer, vil systemet automatisk prøve ein proxy-teneste. Dette kan ta litt lengre tid, men skal fungere.</p>
             </div>
         </div>
 
@@ -415,6 +422,70 @@
             localStorage.setItem('refreshInterval', refreshInterval);
 
             showSuccess('✓ Kalender-synk aktivert! Statusvisinga blir no oppdatert frå kalenderen din.');
+        }
+
+        async function testCalendarSync() {
+            const calendarUrl = document.getElementById('calendarUrl').value;
+            const testResult = document.getElementById('testResult');
+            const testResultTitle = document.getElementById('testResultTitle');
+            const testResultMessage = document.getElementById('testResultMessage');
+
+            if (!calendarUrl) {
+                alert('Skriv inn ein kalender-URL først');
+                return;
+            }
+
+            testResult.style.display = 'block';
+            testResult.style.borderLeftColor = '#F5B942';
+            testResult.style.background = 'rgba(245, 185, 66, 0.1)';
+            testResultTitle.textContent = '🔄 Testar tilkopling...';
+            testResultMessage.textContent = 'Ventar på svar frå kalenderen...';
+
+            try {
+                // Try direct fetch first
+                let response;
+                let icsData;
+                let method = 'direkte';
+                
+                try {
+                    response = await fetch(calendarUrl);
+                    if (!response.ok) throw new Error('Direkte tilgang feila');
+                    icsData = await response.text();
+                } catch (corsError) {
+                    // Try with proxy
+                    method = 'via proxy';
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(calendarUrl);
+                    response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error('Proxy-tilgang feila');
+                    icsData = await response.text();
+                }
+
+                // Parse to check if it's valid ICS
+                if (!icsData.includes('BEGIN:VCALENDAR')) {
+                    throw new Error('Ugyldig ICS-format');
+                }
+
+                // Count events
+                const eventCount = (icsData.match(/BEGIN:VEVENT/g) || []).length;
+
+                testResult.style.borderLeftColor = '#4CAF8E';
+                testResult.style.background = 'rgba(76, 175, 142, 0.1)';
+                testResultTitle.textContent = '✅ Tilkopling vellukka!';
+                testResultMessage.textContent = `Kalenderdata blei henta ${method}. Fann ${eventCount} hendingar i kalenderen. Du kan no aktivere kalender-synk.`;
+
+            } catch (error) {
+                testResult.style.borderLeftColor = '#D97757';
+                testResult.style.background = 'rgba(217, 119, 87, 0.1)';
+                testResultTitle.textContent = '❌ Tilkopling feila';
+                testResultMessage.innerHTML = `
+                    <strong>Feilmelding:</strong> ${error.message}<br><br>
+                    <strong>Moglege løysingar:</strong><br>
+                    1. Sjekk at URL-en er riktig<br>
+                    2. Sjekk at kalenderen er delt som "Offentleg" eller "Kan sjå når eg er oppteken"<br>
+                    3. Prøv å opne URL-en direkte i nettlesaren for å sjekke at ho fungerer<br>
+                    4. Kontakt IT-støtte viss problemet held fram
+                `;
+            }
         }
 
         function disableCalendarSync() {
