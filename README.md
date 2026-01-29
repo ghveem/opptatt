@@ -1,6 +1,7 @@
 # Tilgjengeleg? - Status Display System 🟢
 
 Eit enkelt og elegant system for å vise din tilgjenge til kollegaer.
+Laga for å bli vist på ein [ipad i begrensa tilgangsmodus](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados), men du kan bruke kva skjerm som helst. 
 
 ## 📋 To separate sider
 
@@ -16,11 +17,14 @@ Eit enkelt og elegant system for å vise din tilgjenge til kollegaer.
 - 📱 **Ekstern kontroll** - Endre frå telefon/datamaskin
 - 🎨 **Kvinnherad-design** - Vakre fjord- og fjellfargar
 
+## Demo ##
+Sjå https://ghveem.github.io/opptatt/
+
 ## 🚀 Rask start
 
 ### 1. GitHub Pages (Anbefalt)
 ```
-1. Opprett GitHub repository "tilgjenge-status"
+1. Klon dette repoet "opptatt"
 2. Last opp index.html og innstillingar.html
 3. Settings → Pages → Aktiver
 4. Ferdig!
@@ -28,8 +32,8 @@ Eit enkelt og elegant system for å vise din tilgjenge til kollegaer.
 
 ### 2. Bruk
 ```
-Hovudvisning (iPad): https://dittbrukarnamn.github.io/tilgjenge-status/
-Innstillingar (telefon): https://dittbrukarnamn.github.io/tilgjenge-status/innstillingar.html
+Hovudvisning (iPad): https://dittbrukarnamn.github.io/opptatt/
+Innstillingar (telefon): https://dittbrukarnamn.github.io/opptatt/innstillingar.html
 ```
 
 ## 📱 Oppsett
@@ -37,7 +41,7 @@ Innstillingar (telefon): https://dittbrukarnamn.github.io/tilgjenge-status/innst
 ### iPad-visning (utanfor kontoret)
 1. Opne hovudvisning på iPad
 2. Legg til på heimeskjermen
-3. Konfigurer Guided Access for kiosk-modus
+3. [Konfigurer Guided Access for kiosk-modus på ein iPad](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados) 
 4. Monter utanfor kontoret
 
 ### Ekstern kontroll (telefon/PC)
@@ -105,7 +109,7 @@ Korleis få ICS-URL:
 
 ## 📝 Lisens
 
-Open source - bruk fritt!
+Open kjeldekode - bruk fritt! Føreslå gjerne forbetringar.
 
 ---
 
