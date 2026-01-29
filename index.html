@@ -1,504 +1,492 @@
-<!doctype html>
-<html lang="nb">
+<!DOCTYPE html>
+<html lang="nn">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tilgjengelighet</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary-fjord: #0099D8;
-      --primary-sky: #33ADE3;
-      --neutral-snow: #F8FAFB;
-      --neutral-ice: #E5F4FA;
-      --text-dark: #1E3A5F;
-      --text-mid: #4A6B8A;
-      --accent-glacier: #66BFEB;
-      --status-available: #4CAF8E;
-      --status-busy: #D97757;
-      --status-meeting: #5B8FBF;
-      --status-away: #F5B942;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:'Work Sans',-apple-system,system-ui,sans-serif;
-      background:linear-gradient(135deg,var(--neutral-snow) 0%,var(--neutral-ice) 100%);
-      color:var(--text-dark);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:2rem;
-      position:relative;
-      overflow:hidden;
-    }
-    body::before{content:'';position:absolute;top:-50%;right:-20%;width:80%;height:120%;background:radial-gradient(circle,rgba(0,153,216,.1) 0%,transparent 70%);pointer-events:none;animation:floatBg 20s ease-in-out infinite}
-    body::after{content:'';position:absolute;bottom:-10%;left:-10%;width:60%;height:60%;background:radial-gradient(ellipse at center,rgba(51,173,227,.08) 0%,transparent 60%);pointer-events:none;animation:floatBg 25s ease-in-out infinite reverse}
-    @keyframes floatBg{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-10%,5%) scale(1.1)}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tilgjengeleg?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-fjord: #0099D8;
+            --primary-sky: #33ADE3;
+            --neutral-snow: #F8FAFB;
+            --neutral-ice: #E5F4FA;
+            --text-dark: #1E3A5F;
+            --text-mid: #4A6B8A;
+            --status-available: #4CAF8E;
+            --status-busy: #D97757;
+            --status-meeting: #5B8FBF;
+            --status-away: #F5B942;
+        }
 
-    .container{max-width:900px;width:100%;position:relative;z-index:1}
-    .card{background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-radius:24px;padding:3rem;box-shadow:0 20px 60px rgba(44,56,50,.12),0 8px 16px rgba(44,56,50,.08);animation:slideUp .6s ease-out}
-    @keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    h1{font-family:'DM Serif Display',serif;font-size:3.2rem;line-height:1.1;font-weight:400;letter-spacing:-.02em;text-align:center;margin-bottom:.5rem}
-    .subtitle{text-align:center;color:var(--text-mid);font-size:1.1rem;font-weight:300;margin-bottom:2.2rem}
+        body {
+            font-family: 'Work Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--neutral-snow) 0%, var(--neutral-ice) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-    .status-display{text-align:center;margin:1.25rem 0 1.5rem}
-    .status-indicator{width:180px;height:180px;border-radius:50%;margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;font-size:4rem;box-shadow:0 10px 30px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.3);position:relative;animation:pulse 2s ease-in-out infinite}
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-    .status-indicator::after{content:'';position:absolute;top:-10px;left:-10px;right:-10px;bottom:-10px;border-radius:50%;background:inherit;opacity:.2;filter:blur(20px);z-index:-1}
-    .status-available{background:linear-gradient(135deg,var(--status-available) 0%,#6AC5A3 100%)}
-    .status-busy{background:linear-gradient(135deg,var(--status-busy) 0%,#E68A6E 100%)}
-    .status-meeting{background:linear-gradient(135deg,var(--status-meeting) 0%,#7AA8D1 100%)}
-    .status-away{background:linear-gradient(135deg,var(--status-away) 0%,#F8C563 100%)}
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(0, 153, 216, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            animation: floatBackground 20s ease-in-out infinite;
+        }
 
-    .status-text{font-family:'DM Serif Display',serif;font-size:2.4rem;margin-bottom:.35rem}
-    .status-subtext{color:var(--text-mid);font-size:1.05rem;font-weight:300}
+        @keyframes floatBackground {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-10%, 5%) scale(1.1); }
+        }
 
-    .row{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:1.25rem}
-    .btn{background:var(--primary-fjord);color:#fff;border:none;border-radius:14px;padding:.85rem 1.1rem;font-weight:500;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease;box-shadow:0 10px 25px rgba(0,153,216,.25)}
-    .btn:hover{transform:translateY(-1px)}
-    .btn:active{transform:translateY(0)}
-    .btn-secondary{background:rgba(30,58,95,.08);color:var(--text-dark);box-shadow:none}
+        .container { max-width: 900px; width: 100%; position: relative; z-index: 1; }
 
-    .smalllink{display:inline-block;margin-top:1rem;text-decoration:none;color:var(--text-mid);font-size:.95rem}
-    .smalllink:hover{color:var(--text-dark)}
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(44, 56, 50, 0.12), 0 8px 16px rgba(44, 56, 50, 0.08);
+            animation: slideUp 0.6s ease-out;
+        }
 
-    .notice{margin-top:1.25rem;background:rgba(123,179,224,.12);border-left:4px solid var(--accent-glacier);border-radius:12px;padding:1rem;color:var(--text-dark)}
-    .hidden{display:none !important}
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .details{margin-top:1rem}
-    .toggle{display:flex;align-items:center;gap:.6rem;justify-content:center;color:var(--text-mid);font-size:.95rem;margin-top:1rem}
-    .checkbox{width:18px;height:18px;border-radius:6px}
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.1;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
 
-    .event-details{margin-top:1rem;padding:1rem 1.1rem;border-radius:16px;background:rgba(0,153,216,.08);text-align:left}
-    .event-title{font-weight:500;margin-bottom:.25rem}
-    .event-time{color:var(--text-mid);font-size:.95rem}
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-mid);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+            text-align: center;
+        }
 
-    .upcoming{margin-top:1.5rem;text-align:left}
-    .upcoming h2{font-size:1.1rem;font-weight:500;color:var(--text-dark);margin-bottom:.75rem}
-    .upcoming-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
-    .upcoming-item{padding:.75rem .9rem;border-radius:14px;background:rgba(255,255,255,.7);border:1px solid rgba(30,58,95,.08)}
-    .upcoming-item .t{display:flex;justify-content:space-between;gap:1rem;align-items:baseline}
-    .upcoming-item .s{font-weight:500}
-    .upcoming-item .time{color:var(--text-mid);font-size:.9rem;white-space:nowrap}
-    .upcoming-item .meta{color:var(--text-mid);font-size:.9rem;margin-top:.15rem}
+        .status-display { text-align: center; margin: 2.5rem 0; }
 
-    @media (max-width: 640px){
-      body{padding:1.2rem}
-      .card{padding:2rem}
-      h1{font-size:2.4rem}
-      .status-indicator{width:140px;height:140px;font-size:3rem}
-      .status-text{font-size:2rem}
-    }
-  </style>
+        .status-indicator {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .status-indicator::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: inherit;
+            opacity: 0.2;
+            filter: blur(20px);
+            z-index: -1;
+        }
+
+        .status-available { background: linear-gradient(135deg, var(--status-available) 0%, #6AC5A3 100%); }
+        .status-busy { background: linear-gradient(135deg, var(--status-busy) 0%, #E68A6E 100%); }
+        .status-meeting { background: linear-gradient(135deg, var(--status-meeting) 0%, #7AA8D1 100%); }
+        .status-away { background: linear-gradient(135deg, var(--status-away) 0%, #F8C563 100%); }
+
+        .status-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .status-subtext {
+            font-size: 1.375rem;
+            color: var(--text-mid);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .upcoming-events {
+            margin: 3rem 0 0 0;
+            padding: 2rem;
+            background: var(--neutral-ice);
+            border-radius: 16px;
+            border-left: 4px solid var(--primary-fjord);
+        }
+
+        .upcoming-events h3 {
+            font-size: 1.375rem;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .event-list { display: flex; flex-direction: column; gap: 1rem; }
+
+        .event-item {
+            background: white;
+            padding: 1.25rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s;
+        }
+
+        .event-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .event-time {
+            font-weight: 600;
+            color: var(--primary-fjord);
+            font-size: 1.125rem;
+            min-width: 100px;
+            text-align: center;
+            background: var(--neutral-ice);
+            padding: 0.75rem;
+            border-radius: 8px;
+        }
+
+        .event-details { flex: 1; }
+
+        .event-title {
+            font-size: 1.125rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 0.375rem;
+        }
+
+        .event-duration {
+            font-size: 1rem;
+            color: var(--text-mid);
+        }
+
+        .no-events {
+            text-align: center;
+            color: var(--text-mid);
+            font-size: 1.125rem;
+            padding: 2rem;
+            font-style: italic;
+        }
+
+        .settings-link {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary-fjord);
+            color: white;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 153, 216, 0.3);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .settings-link:hover {
+            transform: translateY(-2px) rotate(90deg);
+            box-shadow: 0 6px 16px rgba(0, 153, 216, 0.4);
+        }
+
+        .sync-indicator {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.75rem 1.25rem;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            color: var(--text-mid);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sync-indicator.active { display: flex; }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .sync-indicator.active::before {
+            content: '🔄';
+            animation: spin 1s linear infinite;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .subtitle { font-size: 1.125rem; }
+            .status-indicator { width: 150px; height: 150px; font-size: 3.5rem; }
+            .status-text { font-size: 2.25rem; }
+            .status-subtext { font-size: 1.125rem; }
+            .card { padding: 1.5rem; }
+            .event-item { flex-direction: column; text-align: center; }
+            .event-time { min-width: auto; width: 100%; }
+            .settings-link { bottom: 1.5rem; right: 1.5rem; width: 56px; height: 56px; font-size: 1.5rem; }
+            .upcoming-events { padding: 1.5rem; }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Tilgjengelighet</h1>
-      <p class="subtitle">Vis kalenderstatus til kollegaer</p>
+    <div class="container">
+        <div class="card">
+            <h1>Tilgjengeleg?</h1>
+            <p class="subtitle">Eg er</p>
 
-      <div class="status-display">
-        <div id="statusIndicator" class="status-indicator status-available">✓</div>
-        <div id="statusText" class="status-text">Tilgjengelig</div>
-        <div id="statusSubtext" class="status-subtext">Ingen møte akkurat nå</div>
+            <div class="status-display">
+                <div id="statusIndicator" class="status-indicator status-available">✓</div>
+                <div id="statusText" class="status-text">Tilgjengeleg</div>
+                <div id="statusSubtext" class="status-subtext">Bank gjerne på</div>
+            </div>
 
-        <div id="eventDetails" class="event-details hidden">
-          <div class="event-title" id="eventTitle"></div>
-          <div class="event-time" id="eventTime"></div>
+            <div id="upcomingEvents" class="upcoming-events" style="display: none;">
+                <h3>📅 Komande møte (neste 12 timar)</h3>
+                <div id="eventList" class="event-list"></div>
+            </div>
         </div>
-
-        <label class="toggle">
-          <input type="checkbox" class="checkbox" id="showDetailsToggle" onchange="toggleDetails()">
-          <span>Vis møtedetaljer</span>
-        </label>
-      </div>
-
-      <div class="row">
-        <button class="btn btn-secondary" onclick="refreshStatus()">Oppdater</button>
-        <a class="btn btn-secondary" href="settings.html" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">Innstillinger</a>
-      </div>
-
-      <div id="configNotice" class="notice hidden">
-        <strong>⚠️ Ikke konfigurert</strong><br>
-        Gå til <a href="settings.html">Innstillinger</a> og legg inn enten <b>Outlook/ICS-URL</b> (anbefalt) eller <b>Azure Client ID</b> for innlogging.
-      </div>
-
-      <div id="upcoming" class="upcoming hidden">
-        <h2>Kommende hendelser (neste 12 timer)</h2>
-        <ul id="upcomingList" class="upcoming-list"></ul>
-      </div>
-
-      <div id="errorMessage" class="notice hidden" style="border-left-color:#D97757;background:rgba(217,119,87,.12)"></div>
-
-      <a class="smalllink" href="settings.html">Åpne innstillinger</a>
     </div>
-  </div>
 
-<script>
-  // --- Konfig ---
-  function getConfig(){
-    const raw = localStorage.getItem('tilgjenge-config');
-    const cfg = raw ? JSON.parse(raw) : {};
-    return {
-      calendarUrl: cfg.calendarUrl || localStorage.getItem('calendarUrl') || '',
-      refreshInterval: Number(cfg.refreshInterval || localStorage.getItem('refreshInterval') || 60000),
-      clientId: cfg.clientId || '',
-      showDetails: Boolean(cfg.showDetails ?? false),
-      timezone: cfg.timezone || 'Europe/Oslo'
-    };
-  }
+    <div id="syncIndicator" class="sync-indicator">Synkroniserer...</div>
+    <a href="innstillingar.html" class="settings-link" title="Innstillingar">⚙️</a>
 
-  function showError(msg){
-    const el = document.getElementById('errorMessage');
-    el.textContent = msg;
-    el.classList.remove('hidden');
-  }
-  function hideError(){
-    document.getElementById('errorMessage').classList.add('hidden');
-  }
+    <script>
+        const statusMessages = {
+            available: 'Bank gjerne på',
+            busy: 'Ikkje forstyrr, eg er djupt konsentrert',
+            meeting: 'Prøv igjen, etter at møtet er avslutta',
+            lunch: 'På lunsjpause',
+            away: 'Ute frå kontoret. Send gjerne ein e-post'
+        };
 
-  // --- Status UI ---
-  let showDetails = false;
+        let calendarSyncInterval = null;
 
-  function formatTime(date){
-    return date.toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});
-  }
-  function formatDateTime(date){
-    return date.toLocaleString('nb-NO',{weekday:'short',hour:'2-digit',minute:'2-digit'});
-  }
+        window.addEventListener('load', function() {
+            const calendarUrl = localStorage.getItem('calendarUrl');
+            if (calendarUrl) {
+                const refreshInterval = parseInt(localStorage.getItem('refreshInterval')) || 60000;
+                startCalendarSync(calendarUrl, refreshInterval);
+            } else {
+                loadAndDisplayStatus();
+                checkAutoUpdate();
+                setInterval(checkAutoUpdate, 60000);
+            }
+        });
 
-  function setStatus(kind, title, sub, details){
-    const indicator = document.getElementById('statusIndicator');
-    const statusText = document.getElementById('statusText');
-    const statusSubtext = document.getElementById('statusSubtext');
-    const eventDetails = document.getElementById('eventDetails');
-    const eventTitle = document.getElementById('eventTitle');
-    const eventTime = document.getElementById('eventTime');
+        function loadAndDisplayStatus() {
+            const saved = localStorage.getItem('tilgjenge-status');
+            if (saved) {
+                const data = JSON.parse(saved);
+                displayStatus(data.status || 'available', data.customMessage || '');
+            } else {
+                displayStatus('available', '');
+            }
+        }
 
-    indicator.className = `status-indicator ${kind}`;
-    indicator.textContent = (kind==='status-available') ? '✓' : (kind==='status-busy' ? '●' : '○');
-    statusText.textContent = title;
-    statusSubtext.textContent = sub;
+        function displayStatus(status, customMessage) {
+            const indicator = document.getElementById('statusIndicator');
+            const statusText = document.getElementById('statusText');
+            const statusSubtext = document.getElementById('statusSubtext');
 
-    if (showDetails && details){
-      eventTitle.textContent = details.title || '';
-      eventTime.textContent = details.time || '';
-      eventDetails.classList.remove('hidden');
-    } else {
-      eventDetails.classList.add('hidden');
-    }
-  }
+            let message = customMessage || statusMessages[status];
 
-  function toggleDetails(){
-    showDetails = document.getElementById('showDetailsToggle').checked;
-    localStorage.setItem('tilgjenge-showDetails', showDetails ? '1' : '0');
-    refreshStatus();
-  }
+            const statusConfig = {
+                available: { class: 'status-available', icon: '✓', text: 'Tilgjengeleg' },
+                busy: { class: 'status-busy', icon: '●', text: 'Oppteken' },
+                meeting: { class: 'status-meeting', icon: '○', text: 'I møte' },
+                lunch: { class: 'status-meeting', icon: '🍴', text: 'Lunsjpause' },
+                away: { class: 'status-away', icon: '↗', text: 'Ute' }
+            };
 
-  // --- ICS parsing (enkel, men robust nok for Outlook) ---
-  function unfoldIcsLines(text){
-    // RFC5545: linjer kan "foldes" med CRLF + space/tab
-    return text.replace(/\r\n[ \t]/g, '');
-  }
+            const config = statusConfig[status] || statusConfig.available;
+            indicator.className = 'status-indicator ' + config.class;
+            indicator.textContent = config.icon;
+            statusText.textContent = config.text;
+            statusSubtext.textContent = message;
+        }
 
-  function parseIcsDate(value){
-    // Støtter: YYYYMMDDTHHMMSSZ / YYYYMMDDTHHMMSS / YYYYMMDD
-    const v = value.trim();
-    if (/^\d{8}T\d{6}Z$/.test(v)){
-      const y=v.slice(0,4),m=v.slice(4,6),d=v.slice(6,8),hh=v.slice(9,11),mm=v.slice(11,13),ss=v.slice(13,15);
-      return new Date(Date.UTC(Number(y),Number(m)-1,Number(d),Number(hh),Number(mm),Number(ss)));
-    }
-    if (/^\d{8}T\d{6}$/.test(v)){
-      const y=v.slice(0,4),m=v.slice(4,6),d=v.slice(6,8),hh=v.slice(9,11),mm=v.slice(11,13),ss=v.slice(13,15);
-      return new Date(`${y}-${m}-${d}T${hh}:${mm}:${ss}`);
-    }
-    if (/^\d{8}$/.test(v)){
-      const y=v.slice(0,4),m=v.slice(4,6),d=v.slice(6,8);
-      return new Date(`${y}-${m}-${d}T00:00:00`);
-    }
-    const dt = new Date(v);
-    return isNaN(dt.getTime()) ? null : dt;
-  }
+        function checkAutoUpdate() {
+            const saved = localStorage.getItem('tilgjenge-status');
+            if (!saved) return;
 
-  function parseIcsEvents(icsText){
-    const text = unfoldIcsLines(icsText);
-    const lines = text.split(/\r?\n/);
-    const events = [];
-    let e = null;
+            const data = JSON.parse(saved);
+            const now = new Date();
+            const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
 
-    for (const rawLine of lines){
-      const line = rawLine.trim();
-      if (!line) continue;
-      if (line === 'BEGIN:VEVENT'){ e = {}; continue; }
-      if (line === 'END:VEVENT'){
-        if (e && e.start && e.end) events.push(e);
-        e = null; continue;
-      }
-      if (!e) continue;
+            if ((data.autoUntil && currentTime >= data.autoUntil) || 
+                (data.autoReturn && currentTime >= data.autoReturn)) {
+                data.status = 'available';
+                data.autoUntil = '';
+                data.autoReturn = '';
+                localStorage.setItem('tilgjenge-status', JSON.stringify(data));
+                loadAndDisplayStatus();
+            }
+        }
 
-      const idx = line.indexOf(':');
-      if (idx === -1) continue;
-      const left = line.slice(0, idx);
-      const value = line.slice(idx+1);
-      const key = left.split(';')[0].toUpperCase();
+        function startCalendarSync(calendarUrl, refreshInterval) {
+            fetchCalendarStatus(calendarUrl);
+            if (calendarSyncInterval) clearInterval(calendarSyncInterval);
+            calendarSyncInterval = setInterval(() => fetchCalendarStatus(calendarUrl), refreshInterval);
+        }
 
-      if (key === 'DTSTART') e.start = parseIcsDate(value);
-      if (key === 'DTEND') e.end = parseIcsDate(value);
-      if (key === 'SUMMARY') e.summary = value;
-      if (key === 'LOCATION') e.location = value;
-      if (key === 'STATUS') e.status = value;
-      if (key === 'TRANSP') e.transp = value; // OPAQUE/TRANSPARENT
-    }
+        async function fetchCalendarStatus(calendarUrl) {
+            showSyncIndicator();
+            try {
+                const response = await fetch(calendarUrl);
+                const icsData = await response.text();
+                const events = parseICS(icsData);
+                const currentEvent = getCurrentEvent(events);
+                const upcomingEvents = getUpcomingEvents(events, 12);
 
-    return events
-      .filter(ev => ev.start && ev.end && !isNaN(ev.start.getTime()) && !isNaN(ev.end.getTime()))
-      .sort((a,b) => a.start - b.start);
-  }
+                if (currentEvent) {
+                    displayStatus('meeting', currentEvent.summary || 'I møte');
+                } else {
+                    const nextEvent = upcomingEvents[0];
+                    if (nextEvent) {
+                        displayStatus('available', `Neste møte kl ${formatTime(new Date(nextEvent.start))}`);
+                    } else {
+                        displayStatus('available', '');
+                    }
+                }
 
-  function isBusyEvent(ev){
-    // Enkel heuristikk: ignorer CANCELLED og TRANSPARENT
-    if ((ev.status || '').toUpperCase() === 'CANCELLED') return false;
-    if ((ev.transp || '').toUpperCase() === 'TRANSPARENT') return false;
-    return true;
-  }
+                displayUpcomingEvents(upcomingEvents);
+            } catch (error) {
+                console.error('Calendar sync error:', error);
+                loadAndDisplayStatus();
+            }
+            hideSyncIndicator();
+        }
 
-  function buildUpcomingList(events, now){
-    const list = document.getElementById('upcomingList');
-    list.innerHTML = '';
+        function parseICS(icsData) {
+            const events = [];
+            const lines = icsData.split(/\r?\n/);
+            let currentEvent = null;
 
-    const endWindow = new Date(now.getTime() + 12*60*60000);
-    const upcoming = events
-      .filter(ev => isBusyEvent(ev))
-      .filter(ev => ev.start >= now && ev.start <= endWindow)
-      .slice(0, 12);
+            for (let line of lines) {
+                line = line.trim();
+                if (line === 'BEGIN:VEVENT') {
+                    currentEvent = {};
+                } else if (line === 'END:VEVENT' && currentEvent) {
+                    if (currentEvent.start && currentEvent.end) events.push(currentEvent);
+                    currentEvent = null;
+                } else if (currentEvent) {
+                    if (line.startsWith('DTSTART')) currentEvent.start = parseICSDate(line.split(':')[1]);
+                    else if (line.startsWith('DTEND')) currentEvent.end = parseICSDate(line.split(':')[1]);
+                    else if (line.startsWith('SUMMARY:')) currentEvent.summary = line.substring(8);
+                }
+            }
+            return events;
+        }
 
-    if (upcoming.length === 0){
-      const li = document.createElement('li');
-      li.className = 'upcoming-item';
-      li.textContent = 'Ingen hendelser de neste 12 timene.';
-      list.appendChild(li);
-      return;
-    }
+        function parseICSDate(dateStr) {
+            dateStr = dateStr.replace(/[TZ]/g, '');
+            return new Date(`${dateStr.substr(0,4)}-${dateStr.substr(4,2)}-${dateStr.substr(6,2)}T${dateStr.substr(8,2)}:${dateStr.substr(10,2)}:00`);
+        }
 
-    for (const ev of upcoming){
-      const li = document.createElement('li');
-      li.className = 'upcoming-item';
+        function getCurrentEvent(events) {
+            const now = new Date();
+            return events.find(e => now >= e.start && now <= e.end);
+        }
 
-      const title = ev.summary ? ev.summary : 'Hendelse';
-      const time = `${formatTime(ev.start)}–${formatTime(ev.end)}`;
-      const meta = ev.location ? ev.location : formatDateTime(ev.start);
+        function getUpcomingEvents(events, hours) {
+            const now = new Date();
+            const maxTime = new Date(now.getTime() + hours * 60 * 60 * 1000);
+            return events.filter(e => e.start > now && e.start <= maxTime).sort((a, b) => a.start - b.start).slice(0, 10);
+        }
 
-      li.innerHTML = `
-        <div class="t">
-          <div class="s"></div>
-          <div class="time"></div>
-        </div>
-        <div class="meta"></div>
-      `;
-      li.querySelector('.s').textContent = title;
-      li.querySelector('.time').textContent = time;
-      li.querySelector('.meta').textContent = meta;
-      list.appendChild(li);
-    }
-  }
+        function displayUpcomingEvents(events) {
+            const container = document.getElementById('upcomingEvents');
+            const eventList = document.getElementById('eventList');
 
-  // --- Datakilder ---
-  let calendarInterval = null;
-  let msalInstance = null;
-  let currentAccount = null;
+            if (events.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
 
-  async function ensureMsalLoaded(){
-    if (typeof msal !== 'undefined') return;
-    const script = document.createElement('script');
-    script.src = 'https://alcdn.msauth.net/browser/2.38.1/js/msal-browser.min.js';
-    script.integrity = 'sha384-86rAF2h5VR5L3Y9jCq4+iVx0x1HgGaR8MwmZFUKYKrUxEOvMFzb8xZxdPpWkRMfV';
-    script.crossOrigin = 'anonymous';
-    document.head.appendChild(script);
-    await new Promise(r => { script.onload = r; });
-  }
+            container.style.display = 'block';
+            eventList.innerHTML = events.map(e => `
+                <div class="event-item">
+                    <div class="event-time">${formatTime(new Date(e.start))}</div>
+                    <div class="event-details">
+                        <div class="event-title">${escapeHtml(e.summary || 'Møte')}</div>
+                        <div class="event-duration">${formatTime(new Date(e.end))} (${calculateDuration(e.start, e.end)})</div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-  function setAutoRefresh(fn, intervalMs){
-    if (calendarInterval) clearInterval(calendarInterval);
-    calendarInterval = setInterval(fn, intervalMs);
-  }
+        function formatTime(date) {
+            return date.toLocaleTimeString('nb-NO', { hour: '2-digit', minute: '2-digit' });
+        }
 
-  async function fetchViaIcs(calendarUrl){
-    const res = await fetch(calendarUrl, { cache: 'no-store' });
-    if (!res.ok) throw new Error('Kunne ikke hente ICS. Sjekk URL / tilgang.');
-    const ics = await res.text();
-    const events = parseIcsEvents(ics);
+        function calculateDuration(start, end) {
+            const diffMins = Math.round((end - start) / 60000);
+            if (diffMins < 60) return `${diffMins} min`;
+            const hours = Math.floor(diffMins / 60);
+            const mins = diffMins % 60;
+            return mins > 0 ? `${hours}t ${mins}min` : `${hours}t`;
+        }
 
-    const now = new Date();
-    const current = events.find(ev => isBusyEvent(ev) && now >= ev.start && now <= ev.end);
-    const next = events.find(ev => isBusyEvent(ev) && ev.start > now);
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-    if (current){
-      const minutesLeft = Math.max(0, Math.round((current.end - now)/60000));
-      setStatus('status-busy', 'Opptatt', `Tilgjengelig om ${minutesLeft} min`, {
-        title: current.summary || 'I møte',
-        time: `${formatTime(current.start)} - ${formatTime(current.end)}`
-      });
-    } else if (next && (next.start - now) <= 30*60000){
-      const minutesUntil = Math.max(0, Math.round((next.start - now)/60000));
-      setStatus('status-meeting', 'Snart opptatt', `Møte om ${minutesUntil} min`, {
-        title: next.summary || 'Møte',
-        time: `${formatTime(next.start)} - ${formatTime(next.end)}`
-      });
-    } else {
-      setStatus('status-available', 'Tilgjengelig', 'Ingen møte akkurat nå', null);
-    }
+        function showSyncIndicator() {
+            document.getElementById('syncIndicator').classList.add('active');
+        }
 
-    // Upcoming
-    document.getElementById('upcoming').classList.remove('hidden');
-    buildUpcomingList(events, now);
-  }
-
-  async function fetchViaGraph(clientId){
-    await ensureMsalLoaded();
-
-    const msalConfig = {
-      auth: {
-        clientId,
-        authority: 'https://login.microsoftonline.com/common',
-        redirectUri: window.location.origin + window.location.pathname
-      },
-      cache: { cacheLocation: 'localStorage', storeAuthStateInCookie: false }
-    };
-
-    const loginRequest = { scopes: ['Calendars.Read', 'User.Read'] };
-
-    if (!msalInstance) {
-      msalInstance = new msal.PublicClientApplication(msalConfig);
-      await msalInstance.initialize();
-    }
-
-    // konto
-    const accts = msalInstance.getAllAccounts();
-    if (!currentAccount && accts.length > 0) currentAccount = accts[0];
-    if (!currentAccount) {
-      const loginResp = await msalInstance.loginPopup(loginRequest);
-      currentAccount = loginResp.account;
-    }
-
-    const tokenRequest = { scopes: loginRequest.scopes, account: currentAccount };
-    let token;
-    try {
-      token = (await msalInstance.acquireTokenSilent(tokenRequest)).accessToken;
-    } catch (e) {
-      if (e instanceof msal.InteractionRequiredAuthError) {
-        token = (await msalInstance.acquireTokenPopup(tokenRequest)).accessToken;
-      } else {
-        throw e;
-      }
-    }
-
-    const now = new Date();
-    const end30 = new Date(now.getTime() + 30*60000);
-    const end12h = new Date(now.getTime() + 12*60*60000);
-
-    // 1) status (neste 30 min)
-    const resp = await fetch(
-      `https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=${now.toISOString()}&enddatetime=${end30.toISOString()}&$orderby=start/dateTime`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    if (!resp.ok) throw new Error('Kunne ikke hente kalenderdata fra Graph.');
-    const data = await resp.json();
-    const events = data.value || [];
-
-    // 2) upcoming (12 timer)
-    const resp2 = await fetch(
-      `https://graph.microsoft.com/v1.0/me/calendarview?startdatetime=${now.toISOString()}&enddatetime=${end12h.toISOString()}&$orderby=start/dateTime`,
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-    const data2 = resp2.ok ? await resp2.json() : { value: [] };
-
-    updateFromGraphEvents(events, data2.value || [], now);
-  }
-
-  function updateFromGraphEvents(statusEvents, upcomingEvents, now){
-    const current = statusEvents.find(ev => {
-      const s = new Date(ev.start.dateTime);
-      const e = new Date(ev.end.dateTime);
-      return now >= s && now <= e;
-    });
-
-    if (current){
-      const end = new Date(current.end.dateTime);
-      const minutesLeft = Math.max(0, Math.round((end - now)/60000));
-      setStatus('status-busy', 'Opptatt', `Tilgjengelig om ${minutesLeft} min`, {
-        title: current.subject || 'I møte',
-        time: `${formatTime(new Date(current.start.dateTime))} - ${formatTime(end)}`
-      });
-    } else if (statusEvents.length > 0){
-      const next = statusEvents[0];
-      const start = new Date(next.start.dateTime);
-      const minutesUntil = Math.max(0, Math.round((start - now)/60000));
-      setStatus('status-meeting', 'Snart opptatt', `Møte om ${minutesUntil} min`, {
-        title: next.subject || 'Møte',
-        time: `${formatTime(start)} - ${formatTime(new Date(next.end.dateTime))}`
-      });
-    } else {
-      setStatus('status-available', 'Tilgjengelig', 'Ingen møte akkurat nå', null);
-    }
-
-    // Upcoming list
-    document.getElementById('upcoming').classList.remove('hidden');
-    const normalized = (upcomingEvents || [])
-      .filter(ev => ev && ev.start && ev.end)
-      .map(ev => ({
-        summary: ev.subject,
-        start: new Date(ev.start.dateTime),
-        end: new Date(ev.end.dateTime),
-        location: ev.location && ev.location.displayName ? ev.location.displayName : ''
-      }))
-      .sort((a,b) => a.start - b.start);
-
-    buildUpcomingList(normalized, now);
-  }
-
-  // --- Orkestrering ---
-  async function refreshStatus(){
-    hideError();
-    const cfg = getConfig();
-
-    // Last showDetails
-    const stored = localStorage.getItem('tilgjenge-showDetails');
-    showDetails = (stored === '1') || cfg.showDetails;
-    document.getElementById('showDetailsToggle').checked = !!showDetails;
-
-    // Preferer ICS hvis oppgitt
-    if (cfg.calendarUrl){
-      document.getElementById('configNotice').classList.add('hidden');
-      try {
-        await fetchViaIcs(cfg.calendarUrl);
-        setAutoRefresh(() => fetchViaIcs(cfg.calendarUrl).catch(()=>{}), cfg.refreshInterval);
-      } catch (e){
-        showError(`${e.message} (Merk: noen Outlook-lenker blokkeres av CORS. Da trenger du enten en proxy, eller bruk Graph/innlogging.)`);
-      }
-      return;
-    }
-
-    // Fall back til Graph
-    if (!cfg.clientId || cfg.clientId === 'YOUR_CLIENT_ID_HERE'){
-      document.getElementById('configNotice').classList.remove('hidden');
-      return;
-    }
-
-    document.getElementById('configNotice').classList.add('hidden');
-
-    try {
-      await fetchViaGraph(cfg.clientId);
-      setAutoRefresh(() => fetchViaGraph(cfg.clientId).catch(()=>{}), cfg.refreshInterval);
-    } catch (e){
-      showError(e.message || 'Ukjent feil ved henting av kalenderstatus.');
-    }
-  }
-
-  window.addEventListener('load', refreshStatus);
-</script>
+        function hideSyncIndicator() {
+            setTimeout(() => document.getElementById('syncIndicator').classList.remove('active'), 1000);
+        }
+    </script>
 </body>
 </html>

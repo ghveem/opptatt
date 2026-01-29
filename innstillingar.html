@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Innstillingar - Tilgjengeleg?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-fjord: #0099D8;
+            --primary-sky: #33ADE3;
+            --neutral-snow: #F8FAFB;
+            --neutral-ice: #E5F4FA;
+            --text-dark: #1E3A5F;
+            --text-mid: #4A6B8A;
+            --status-available: #4CAF8E;
+            --status-busy: #D97757;
+            --status-meeting: #5B8FBF;
+            --status-away: #F5B942;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Work Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--neutral-snow) 0%, var(--neutral-ice) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container { max-width: 700px; margin: 0 auto; }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--text-mid);
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--neutral-ice);
+        }
+
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-btn {
+            padding: 1rem;
+            background: var(--neutral-ice);
+            border: 3px solid transparent;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Work Sans', sans-serif;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .quick-btn:hover {
+            background: white;
+            border-color: var(--primary-fjord);
+            transform: translateY(-2px);
+        }
+
+        .quick-btn.active {
+            background: var(--primary-fjord);
+            color: white;
+            border-color: var(--primary-fjord);
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        select, input[type="text"], input[type="url"], input[type="time"] {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            font-family: 'Work Sans', sans-serif;
+            border: 2px solid var(--neutral-ice);
+            border-radius: 12px;
+            background: white;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary-fjord);
+            box-shadow: 0 0 0 3px rgba(0, 153, 216, 0.1);
+        }
+
+        .time-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-fjord) 0%, var(--primary-sky) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 153, 216, 0.25);
+            font-family: 'Work Sans', sans-serif;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 153, 216, 0.35);
+        }
+
+        .btn-secondary {
+            background: var(--neutral-ice);
+            color: var(--text-dark);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--status-busy) 0%, #E68A6E 100%);
+        }
+
+        .help-text {
+            font-size: 0.875rem;
+            color: var(--text-mid);
+            margin-top: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .info-box {
+            background: rgba(0, 153, 216, 0.1);
+            border-left: 4px solid var(--primary-fjord);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .info-box ol {
+            margin: 0.5rem 0 0 1.5rem;
+            padding: 0;
+        }
+
+        .info-box li {
+            margin-bottom: 0.25rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-fjord);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .back-link:hover {
+            gap: 0.75rem;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, var(--status-available) 0%, #6AC5A3 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            margin-bottom: 1rem;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 640px) {
+            h1 { font-size: 2rem; }
+            .card { padding: 1.5rem; }
+            .quick-buttons { grid-template-columns: 1fr; }
+            .time-inputs { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Tilbake til status</a>
+
+        <div class="header">
+            <h1>⚙️ Innstillingar</h1>
+            <p class="subtitle">Kontroller statusen din eksternt</p>
+        </div>
+
+        <div id="successMessage" class="success-message"></div>
+
+        <!-- Manual Status Control -->
+        <div class="card">
+            <h2 class="section-title">Manuell status</h2>
+
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="setStatus('available')">✓ Tilgjengeleg</button>
+                <button class="quick-btn" onclick="setStatus('busy')">● Oppteken</button>
+                <button class="quick-btn" onclick="setStatus('meeting')">○ I møte</button>
+                <button class="quick-btn" onclick="setStatus('away')">↗ Ute</button>
+            </div>
+
+            <div class="control-group">
+                <label for="statusSelect">Vel status:</label>
+                <select id="statusSelect" onchange="updatePreview()">
+                    <option value="available">Tilgjengeleg</option>
+                    <option value="busy">Oppteken</option>
+                    <option value="meeting">I møte</option>
+                    <option value="lunch">Lunsjpause</option>
+                    <option value="away">Ute frå kontoret</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="customMessage">Tilpasset melding (valgfritt):</label>
+                <input type="text" id="customMessage" placeholder="T.d. 'Tilbake kl 14:00'">
+            </div>
+
+            <div class="control-group">
+                <label>Automatisk oppdatering (valgfritt):</label>
+                <div class="time-inputs">
+                    <div>
+                        <label for="autoUntil" style="font-size: 0.85rem; font-weight: 400;">Oppteken til:</label>
+                        <input type="time" id="autoUntil">
+                    </div>
+                    <div>
+                        <label for="autoReturn" style="font-size: 0.85rem; font-weight: 400;">Tilbake kl:</label>
+                        <input type="time" id="autoReturn">
+                    </div>
+                </div>
+                <p class="help-text">Statusen endrar seg automatisk til valt tidspunkt</p>
+            </div>
+
+            <button class="btn" onclick="saveManualStatus()">💾 Lagre status</button>
+        </div>
+
+        <!-- Outlook Calendar Integration -->
+        <div class="card">
+            <h2 class="section-title">📅 Outlook Kalender-synk</h2>
+
+            <div class="control-group">
+                <label for="calendarUrl">Delt Outlook-kalender URL (ICS):</label>
+                <input type="url" id="calendarUrl" placeholder="https://outlook.office365.com/owa/calendar/...">
+                <p class="help-text">Lim inn URL-en til din delte Outlook-kalender</p>
+            </div>
+
+            <div class="control-group">
+                <label for="refreshInterval">Oppdateringsfrekvens:</label>
+                <select id="refreshInterval">
+                    <option value="60000">Kvart minutt</option>
+                    <option value="300000">Kvart 5. minutt</option>
+                    <option value="600000">Kvart 10. minutt</option>
+                    <option value="1800000">Kvart 30. minutt</option>
+                </select>
+            </div>
+
+            <button class="btn" onclick="enableCalendarSync()">🔄 Aktiver kalender-synk</button>
+            <button class="btn btn-secondary" onclick="disableCalendarSync()" style="margin-top: 0.75rem;">⏹️ Stopp kalender-synk</button>
+
+            <div class="info-box">
+                <strong>Korleis få kalender-URL:</strong>
+                <ol>
+                    <li>Opne Outlook Calendar på nettet</li>
+                    <li>Høgreklikk på kalenderen du vil dele</li>
+                    <li>Vel "Delingsinnstillingar" eller "Publiser"</li>
+                    <li>Vel "Kan sjå når eg er oppteken"</li>
+                    <li>Kopier ICS-lenka</li>
+                    <li>Lim inn her</li>
+                </ol>
+                <p style="margin-top: 0.75rem;"><strong>Viktig:</strong> Når kalender-synk er aktivert, vil manuell status bli overstyrt av kalenderen din.</p>
+            </div>
+        </div>
+
+        <!-- Reset -->
+        <div class="card">
+            <h2 class="section-title">🔄 Nullstill</h2>
+            <p style="margin-bottom: 1rem; color: var(--text-mid);">Nullstill alle innstillingar til standardverdiar</p>
+            <button class="btn btn-danger" onclick="resetAll()">🗑️ Nullstill alt</button>
+        </div>
+    </div>
+
+    <script>
+        const statusMessages = {
+            available: 'Bank gjerne på',
+            busy: 'Ikkje forstyrr, eg er djupt konsentrert',
+            meeting: 'Prøv igjen, etter at møtet er avslutta',
+            lunch: 'På lunsjpause',
+            away: 'Ute frå kontoret. Send gjerne ein e-post'
+        };
+
+        window.addEventListener('load', function() {
+            loadSettings();
+        });
+
+        function loadSettings() {
+            const saved = localStorage.getItem('tilgjenge-status');
+            if (saved) {
+                const data = JSON.parse(saved);
+                document.getElementById('statusSelect').value = data.status || 'available';
+                document.getElementById('customMessage').value = data.customMessage || '';
+                document.getElementById('autoUntil').value = data.autoUntil || '';
+                document.getElementById('autoReturn').value = data.autoReturn || '';
+                updateQuickButtons(data.status || 'available');
+            }
+
+            const calendarUrl = localStorage.getItem('calendarUrl');
+            const refreshInterval = localStorage.getItem('refreshInterval');
+            if (calendarUrl) document.getElementById('calendarUrl').value = calendarUrl;
+            if (refreshInterval) document.getElementById('refreshInterval').value = refreshInterval;
+        }
+
+        function setStatus(status) {
+            document.getElementById('statusSelect').value = status;
+            updateQuickButtons(status);
+        }
+
+        function updateQuickButtons(activeStatus) {
+            document.querySelectorAll('.quick-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes('Tilgjengeleg') && activeStatus === 'available') btn.classList.add('active');
+                if (btn.textContent.includes('Oppteken') && activeStatus === 'busy') btn.classList.add('active');
+                if (btn.textContent.includes('I møte') && activeStatus === 'meeting') btn.classList.add('active');
+                if (btn.textContent.includes('Ute') && activeStatus === 'away') btn.classList.add('active');
+            });
+        }
+
+        function updatePreview() {
+            updateQuickButtons(document.getElementById('statusSelect').value);
+        }
+
+        function saveManualStatus() {
+            const data = {
+                status: document.getElementById('statusSelect').value,
+                customMessage: document.getElementById('customMessage').value,
+                autoUntil: document.getElementById('autoUntil').value,
+                autoReturn: document.getElementById('autoReturn').value,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('tilgjenge-status', JSON.stringify(data));
+            showSuccess('✓ Status lagra! Statusvisinga blir oppdatert automatisk.');
+        }
+
+        function enableCalendarSync() {
+            const calendarUrl = document.getElementById('calendarUrl').value;
+            const refreshInterval = document.getElementById('refreshInterval').value;
+
+            if (!calendarUrl) {
+                alert('Skriv inn ein kalender-URL først');
+                return;
+            }
+
+            localStorage.setItem('calendarUrl', calendarUrl);
+            localStorage.setItem('refreshInterval', refreshInterval);
+
+            showSuccess('✓ Kalender-synk aktivert! Statusvisinga blir no oppdatert frå kalenderen din.');
+        }
+
+        function disableCalendarSync() {
+            localStorage.removeItem('calendarUrl');
+            localStorage.removeItem('refreshInterval');
+            document.getElementById('calendarUrl').value = '';
+
+            showSuccess('⏹️ Kalender-synk stoppa. Byttar tilbake til manuell status.');
+        }
+
+        function resetAll() {
+            if (!confirm('Er du sikker på at du vil nullstille alle innstillingar?')) {
+                return;
+            }
+
+            localStorage.removeItem('tilgjenge-status');
+            localStorage.removeItem('calendarUrl');
+            localStorage.removeItem('refreshInterval');
+
+            document.getElementById('statusSelect').value = 'available';
+            document.getElementById('customMessage').value = '';
+            document.getElementById('autoUntil').value = '';
+            document.getElementById('autoReturn').value = '';
+            document.getElementById('calendarUrl').value = '';
+            updateQuickButtons('available');
+
+            showSuccess('🔄 Alle innstillingar er nullstilte');
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.getElementById('successMessage');
+            successDiv.textContent = message;
+            successDiv.classList.add('show');
+
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
