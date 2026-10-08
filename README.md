@@ -58,7 +58,7 @@ Overstyringa går føre kalenderen. Vil du avslutte ho tidleg, trykk på sirkele
 Panelet lukkar seg sjølv etter 15 sekund utan trykk. Dette fungerer i Guided Access.
 
 ### Innstillingar
-Hald fingeren på statussirkelen i 1,5 sekund for å opne innstillingane (kalender-URL og standardstatus).
+Trykk på statussirkelen og vel «⚙️ Innstillingar», eller hald fingeren på sirkelen i 1,5 sekund, for å opne innstillingane (kalender-URL og standardstatus).
 Det finst ingen synleg innstillingsknapp, så forbipasserande kjem ikkje til innstillingane ved eit uhell.
 
 ## 🎯 Tre bruksmåtar
