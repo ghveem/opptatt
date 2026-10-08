@@ -82,12 +82,12 @@ Viss ingen av løysingane fungerer:
 
 **Bruk manuell modus:**
 1. Ikkje aktiver kalender-synk
-2. Oppdater status manuelt frå telefonen
-3. Bruk tidsstyrt automatikk
+2. Set standardstatus på innstillingssida på iPaden
+3. Overstyr status ved å trykke på statussirkelen på iPaden
 
 **Eksempel:**
-- Før møte: Set "I møte" + "Oppteken til: 14:00"
-- Status endrar seg automatisk kl 14:00
+- Før møte: Trykk på sirkelen, vel «I møte» og «1 time»
+- Etter ein time går statusen tilbake av seg sjølv
 
 ## 🔍 Feilsøking
 
@@ -169,7 +169,7 @@ Viss ingen av løysingane fungerer:
 2. Viss det feiler → Proxy blir brukt automatisk
 3. Viss det framleis feiler → Prøv Outlook Web Access URL
 4. Viss ingenting fungerer → Bruk Google Calendar mellomledd
-5. Siste utveg → Bruk manuell modus med tidsstyrt automatikk
+5. Siste utveg → Bruk manuell status og overstyring på iPaden
 
 **Viktigast:**
 - Test før produksjon

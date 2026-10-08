@@ -17,7 +17,6 @@ Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.app
 - 🟢 **Fem statusar**: tilgjengeleg, i møte, oppteken, lunsjpause, ikkje her no
 - 📅 **Komande møte** - Viser klokkesletta for dei neste møta (utan titlar, av omsyn til personvern)
 - 🔄 **Outlook-synk** - Automatisk frå delt kalender, inkl. gjentakande møte
-- ⏰ **Tidsstyrt** - Automatisk statusendring
 - 👆 **Overstyr på iPaden** - Trykk på statussirkelen og vel status og kor lenge
 - 🎨 **Kvinnherad-design** - Vakre fjord- og fjellfargar
 
@@ -65,18 +64,14 @@ Det finst ingen synleg innstillingsknapp, så forbipasserande kjem ikkje til inn
 «Ikkje forstyrr. Tilbake måndag.». Han blir vist same om kalenderen, ei overstyring eller manuell status styrer.
 Tøm feltet og lagre for å fjerne han.
 
-## 🎯 Tre bruksmåtar
+## 🎯 To bruksmåtar
 
 ### 1. Manuell (Enklast)
 - Opne innstillingarsida på iPaden
 - Klikk på snøggknapp
 - Lagre
 
-### 2. Tidsstyrt
-- Set "Oppteken til: 14:00"
-- Status endrar seg automatisk kl 14:00
-
-### 3. Outlook-synk (Mest automatisk)
+### 2. Outlook-synk (Mest automatisk)
 - Lim inn ICS-URL frå Outlook
 - Aktiver kalender-synk
 - Alt skjer automatisk!
@@ -89,6 +84,9 @@ Kalendersynken handterer:
 Merk: Når kalender-synk er aktiv, overstyrer kalenderen manuell status. Viss direkte henting
 blir blokkert av CORS, blir kalender-URL-en sendt via den eksterne tenesta `api.allorigins.win`.
 Kalender-URL-en gir lesetilgang til kalenderen din, så vurder om det er greitt.
+
+Viss kalenderen ikkje kan hentast, viser skjermen manuell status med varselet
+«⚠️ Får ikkje kontakt med kalenderen – statusen kan vere utdatert.»
 
 ## 📅 Outlook-integrering
 
@@ -138,4 +136,4 @@ Open kjeldekode - bruk fritt! Føreslå gjerne forbetringar.
 
 ---
 
-**Versjon:** 2.0 | **Laga av:** mest KI, litt Guttorm. 
+**Versjon:** 3.0 | **Laga av:** mest KI, litt Guttorm. 

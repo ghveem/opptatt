@@ -190,6 +190,16 @@
             font-style: italic;
         }
 
+        .calendar-warning {
+            margin-top: 2rem;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            background: #FDF3DC;
+            color: #6B4A00;
+            font-size: 1.125rem;
+            text-align: center;
+        }
+
         .sync-indicator {
             position: fixed;
             top: 2rem;
@@ -307,6 +317,10 @@
                 <h3>📅 Komande møte (neste 12 timar)</h3>
                 <div id="eventList" class="event-list"></div>
             </div>
+
+            <div id="calendarWarning" class="calendar-warning" style="display: none;">
+                ⚠️ Får ikkje kontakt med kalenderen – statusen kan vere utdatert.
+            </div>
         </div>
     </div>
 
@@ -316,8 +330,8 @@
                 <h3>Set status</h3>
                 <div class="override-grid">
                     <button onclick="chooseOverrideStatus('available')">✓ Tilgjengeleg</button>
-                    <button onclick="chooseOverrideStatus('busy')">⛔ Oppteken</button>
                     <button onclick="chooseOverrideStatus('meeting')">⛔ I møte</button>
+                    <button onclick="chooseOverrideStatus('busy')">⛔ Oppteken</button>
                     <button onclick="chooseOverrideStatus('lunch')">🍴 Lunsjpause</button>
                     <button onclick="chooseOverrideStatus('away')">↗ Ikkje her no</button>
                 </div>
@@ -362,8 +376,6 @@
                 startCalendarSync(calendarUrl, refreshInterval);
             } else {
                 render();
-                checkAutoUpdate();
-                setInterval(checkAutoUpdate, 60000);
             }
             // Langt trykk (1,5 s) på sirkelen opnar innstillingane; vanleg trykk opnar overstyring
             const indicator = document.getElementById('statusIndicator');
@@ -486,24 +498,6 @@
             statusSubtext.textContent = extra ? `${message} ${extra}` : message;
         }
 
-        function checkAutoUpdate() {
-            const saved = localStorage.getItem('tilgjenge-status');
-            if (!saved) return;
-
-            const data = JSON.parse(saved);
-            const now = new Date();
-            const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-
-            if ((data.autoUntil && currentTime >= data.autoUntil) || 
-                (data.autoReturn && currentTime >= data.autoReturn)) {
-                data.status = 'available';
-                data.autoUntil = '';
-                data.autoReturn = '';
-                localStorage.setItem('tilgjenge-status', JSON.stringify(data));
-                render();
-            }
-        }
-
         function startCalendarSync(calendarUrl, refreshInterval) {
             fetchCalendarStatus(calendarUrl);
             if (calendarSyncInterval) clearInterval(calendarSyncInterval);
@@ -534,11 +528,13 @@
 
                 // 24 timar så render() har data for heile 12-timarsvindauget mellom hentingane
                 lastEvents = parseICS(icsData, 24);
+                document.getElementById('calendarWarning').style.display = 'none';
                 render();
             } catch (error) {
                 console.error('Calendar sync error:', error);
                 // Fall back to manual status
                 lastEvents = null;
+                document.getElementById('calendarWarning').style.display = 'block';
                 render();
                 
                 // Show error in console but don't alert user

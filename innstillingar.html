@@ -130,12 +130,6 @@
             box-shadow: 0 0 0 3px rgba(0, 153, 216, 0.1);
         }
 
-        .time-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
         .btn {
             background: linear-gradient(135deg, var(--primary-fjord) 0%, var(--primary-sky) 100%);
             color: white;
@@ -235,7 +229,6 @@
             h1 { font-size: 2rem; }
             .card { padding: 1.5rem; }
             .quick-buttons { grid-template-columns: 1fr; }
-            .time-inputs { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -256,8 +249,9 @@
 
             <div class="quick-buttons">
                 <button class="quick-btn" onclick="setStatus('available')">✓ Tilgjengeleg</button>
-                <button class="quick-btn" onclick="setStatus('busy')">⛔ Oppteken</button>
                 <button class="quick-btn" onclick="setStatus('meeting')">⛔ I møte</button>
+                <button class="quick-btn" onclick="setStatus('busy')">⛔ Oppteken</button>
+                <button class="quick-btn" onclick="setStatus('lunch')">🍴 Lunsjpause</button>
                 <button class="quick-btn" onclick="setStatus('away')">↗ Ikkje her no</button>
             </div>
 
@@ -265,8 +259,8 @@
                 <label for="statusSelect">Vel status:</label>
                 <select id="statusSelect" onchange="updatePreview()">
                     <option value="available">Tilgjengeleg</option>
-                    <option value="busy">Oppteken</option>
                     <option value="meeting">I møte</option>
+                    <option value="busy">Oppteken</option>
                     <option value="lunch">Lunsjpause</option>
                     <option value="away">Ikkje her no</option>
                 </select>
@@ -276,21 +270,6 @@
                 <label for="customMessage">Tilpassa melding (valfritt):</label>
                 <input type="text" id="customMessage" placeholder="T.d. 'Tilbake måndag'">
                 <p class="help-text">Blir vist etter standardteksten, også når kalenderen eller ei overstyring styrer statusen. Tøm feltet og lagre for å fjerne ho.</p>
-            </div>
-
-            <div class="control-group">
-                <label>Automatisk oppdatering (valgfritt):</label>
-                <div class="time-inputs">
-                    <div>
-                        <label for="autoUntil" style="font-size: 0.85rem; font-weight: 400;">Oppteken til:</label>
-                        <input type="time" id="autoUntil">
-                    </div>
-                    <div>
-                        <label for="autoReturn" style="font-size: 0.85rem; font-weight: 400;">Tilbake kl:</label>
-                        <input type="time" id="autoReturn">
-                    </div>
-                </div>
-                <p class="help-text">Statusen endrar seg automatisk til valt tidspunkt</p>
             </div>
 
             <button class="btn" onclick="saveManualStatus()">💾 Lagre status</button>
@@ -367,8 +346,6 @@
                 const data = JSON.parse(saved);
                 document.getElementById('statusSelect').value = data.status || 'available';
                 document.getElementById('customMessage').value = data.customMessage || '';
-                document.getElementById('autoUntil').value = data.autoUntil || '';
-                document.getElementById('autoReturn').value = data.autoReturn || '';
                 updateQuickButtons(data.status || 'available');
             }
 
@@ -389,6 +366,7 @@
                 if (btn.textContent.includes('Tilgjengeleg') && activeStatus === 'available') btn.classList.add('active');
                 if (btn.textContent.includes('Oppteken') && activeStatus === 'busy') btn.classList.add('active');
                 if (btn.textContent.includes('I møte') && activeStatus === 'meeting') btn.classList.add('active');
+                if (btn.textContent.includes('Lunsjpause') && activeStatus === 'lunch') btn.classList.add('active');
                 if (btn.textContent.includes('Ikkje her no') && activeStatus === 'away') btn.classList.add('active');
             });
         }
@@ -401,8 +379,6 @@
             const data = {
                 status: document.getElementById('statusSelect').value,
                 customMessage: document.getElementById('customMessage').value,
-                autoUntil: document.getElementById('autoUntil').value,
-                autoReturn: document.getElementById('autoReturn').value,
                 timestamp: new Date().toISOString()
             };
 
@@ -508,8 +484,6 @@
 
             document.getElementById('statusSelect').value = 'available';
             document.getElementById('customMessage').value = '';
-            document.getElementById('autoUntil').value = '';
-            document.getElementById('autoReturn').value = '';
             document.getElementById('calendarUrl').value = '';
             updateQuickButtons('available');
 
