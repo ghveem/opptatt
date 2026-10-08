@@ -61,6 +61,10 @@ Panelet lukkar seg sjølv etter 15 sekund utan trykk. Dette fungerer i Guided Ac
 Trykk på statussirkelen og vel «⚙️ Innstillingar», eller hald fingeren på sirkelen i 1,5 sekund, for å opne innstillingane (kalender-URL og standardstatus).
 Det finst ingen synleg innstillingsknapp, så forbipasserande kjem ikkje til innstillingane ved eit uhell.
 
+**Tilpassa melding:** Tekst du skriv i «Tilpassa melding» blir vist etter standardteksten, til dømes
+«Ikkje forstyrr. Tilbake måndag.». Han blir vist same om kalenderen, ei overstyring eller manuell status styrer.
+Tøm feltet og lagre for å fjerne han.
+
 ## 🎯 Tre bruksmåtar
 
 ### 1. Manuell (Enklast)

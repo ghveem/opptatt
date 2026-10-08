@@ -454,7 +454,7 @@
             const saved = localStorage.getItem('tilgjenge-status');
             if (saved) {
                 const data = JSON.parse(saved);
-                displayStatus(data.status || 'available', data.customMessage || '');
+                displayStatus(data.status || 'available', '');
             } else {
                 displayStatus('available', '');
             }
@@ -480,7 +480,10 @@
             indicator.textContent = config.icon;
             statusText.textContent = config.text;
             document.getElementById('statusVerb').textContent = config.verb || 'Eg er';
-            statusSubtext.textContent = message;
+            // Tilpassa melding frå innstillingane blir lagt til i alle modusar (kalender, overstyring, manuell)
+            const saved = JSON.parse(localStorage.getItem('tilgjenge-status') || '{}');
+            const extra = (saved.customMessage || '').trim();
+            statusSubtext.textContent = extra ? `${message} ${extra}` : message;
         }
 
         function checkAutoUpdate() {
