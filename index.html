@@ -89,7 +89,7 @@
             text-align: center;
         }
 
-        .status-display { text-align: center; margin: 2.5rem 0; }
+        .status-display { text-align: center; margin: 0 0 2.5rem; }
 
         .status-indicator {
             width: 200px;
@@ -132,7 +132,7 @@
         .status-text {
             font-family: 'DM Serif Display', serif;
             font-size: 3rem;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
             color: var(--text-dark);
         }
 
@@ -339,8 +339,8 @@
             <!--<p class="subtitle">Eg er</p>-->
 
             <div class="status-display">
+                <div id="statusText" class="status-text">tilgjengeleg</div>
                 <div id="statusIndicator" class="status-indicator status-available" onclick="openOverridePanel()">✓</div>
-                <div id="statusText" class="status-text">Tilgjengeleg</div>
                 <div id="statusSubtext" class="status-subtext">Bank gjerne på.</div>
             </div>
 
@@ -500,11 +500,11 @@
             let message = customMessage || statusMessages[status];
 
             const statusConfig = {
-                available: { class: 'status-available', icon: '✓', text: 'Tilgjengeleg' },
-                busy: { class: 'status-busy', icon: '●', text: 'Oppteken' },
-                meeting: { class: 'status-meeting', icon: '○', text: 'I møte' },
-                lunch: { class: 'status-meeting', icon: '🍴', text: 'Lunsjpause' },
-                away: { class: 'status-away', icon: '↗', text: 'Ute' }
+                available: { class: 'status-available', icon: '✓', text: 'tilgjengeleg' },
+                busy: { class: 'status-busy', icon: '●', text: 'oppteken' },
+                meeting: { class: 'status-meeting', icon: '○', text: 'i møte' },
+                lunch: { class: 'status-meeting', icon: '🍴', text: 'på lunsj' },
+                away: { class: 'status-away', icon: '↗', text: 'ute' }
             };
 
             const config = statusConfig[status] || statusConfig.available;
