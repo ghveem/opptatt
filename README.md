@@ -15,7 +15,7 @@ Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.app
 ## ✨ Funksjonar
 
 - 🟢 **Fem statusar**: tilgjengeleg, i møte, oppteken, lunsjpause, ikkje her no
-- 📅 **Komande møte** - Viser dei neste 12 timane
+- 📅 **Komande møte** - Viser klokkesletta for dei neste møta (utan titlar, av omsyn til personvern)
 - 🔄 **Outlook-synk** - Automatisk frå delt kalender, inkl. gjentakande møte
 - ⏰ **Tidsstyrt** - Automatisk statusendring
 - 👆 **Overstyr på iPaden** - Trykk på statussirkelen og vel status og kor lenge
@@ -37,7 +37,7 @@ Sjå https://ghveem.github.io/opptatt/
 ### 2. Bruk
 ```
 Hovudvisning (iPad): https://dittbrukarnamn.github.io/opptatt/
-Innstillingar (same iPad, via ⚙️-knappen): https://dittbrukarnamn.github.io/opptatt/innstillingar.html
+Innstillingar (same iPad, langt trykk på sirkelen): https://dittbrukarnamn.github.io/opptatt/innstillingar.html
 ```
 
 ## 📱 Oppsett
@@ -58,7 +58,8 @@ Overstyringa går føre kalenderen. Vil du avslutte ho tidleg, trykk på sirkele
 Panelet lukkar seg sjølv etter 15 sekund utan trykk. Dette fungerer i Guided Access.
 
 ### Innstillingar
-Kalender-URL og standardstatus blir sette via ⚙️ nedst til høgre (krev at du går ut av Guided Access).
+Hald fingeren på statussirkelen i 1,5 sekund for å opne innstillingane (kalender-URL og standardstatus).
+Det finst ingen synleg innstillingsknapp, så forbipasserande kjem ikkje til innstillingane ved eit uhell.
 
 ## 🎯 Tre bruksmåtar
 
