@@ -18,6 +18,7 @@ Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.app
 - 📅 **Komande møte** - Viser dei neste 12 timane
 - 🔄 **Outlook-synk** - Automatisk frå delt kalender, inkl. gjentakande møte
 - ⏰ **Tidsstyrt** - Automatisk statusendring
+- 👆 **Overstyr på iPaden** - Trykk på statussirkelen og vel status og kor lenge
 - 🎨 **Kvinnherad-design** - Vakre fjord- og fjellfargar
 
 ## Demo ##
@@ -47,10 +48,17 @@ Innstillingar (same iPad, via ⚙️-knappen): https://dittbrukarnamn.github.io/
 3. [Konfigurer Guided Access for kiosk-modus på ein iPad](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados) 
 4. Monter utanfor kontoret
 
-### Endre status
-1. Trykk ⚙️ nedst til høgre på iPaden (krev at du går ut av Guided Access)
-2. Vel status og lagre
-3. Gå tilbake til statusvisinga
+### Overstyre status på iPaden
+1. Trykk på statussirkelen
+2. Vel status (Tilgjengeleg, Oppteken, I møte, Lunsjpause, Ute)
+3. Vel kor lenge: 30 min, 1 time, 2 timar eller resten av dagen
+4. Når tida er ute, tek kalenderen (eller manuell status) over att av seg sjølv
+
+Overstyringa går føre kalenderen. Vil du avslutte ho tidleg, trykk på sirkelen og vel «↺ Avslutt overstyring».
+Panelet lukkar seg sjølv etter 15 sekund utan trykk. Dette fungerer i Guided Access.
+
+### Innstillingar
+Kalender-URL og standardstatus blir sette via ⚙️ nedst til høgre (krev at du går ut av Guided Access).
 
 ## 🎯 Tre bruksmåtar
 

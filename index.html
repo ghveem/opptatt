@@ -261,6 +261,63 @@
             animation: spin 1s linear infinite;
         }
 
+        .status-indicator { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+        .override-panel {
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 58, 95, 0.4);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 2000;
+        }
+
+        .override-panel.open { display: flex; }
+
+        .override-box {
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            width: 100%;
+            max-width: 560px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .override-box h3 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .override-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+        .override-box button {
+            font-family: 'Work Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            background: var(--neutral-ice);
+            border: none;
+            border-radius: 16px;
+            padding: 1.25rem 1rem;
+            cursor: pointer;
+        }
+
+        .override-box button:active { background: var(--primary-fjord); color: white; }
+
+        .override-box .override-secondary {
+            width: 100%;
+            margin-top: 1rem;
+            background: transparent;
+            border: 2px solid var(--neutral-ice);
+            font-size: 1.1rem;
+        }
+
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
             .subtitle { font-size: 1.125rem; }
@@ -278,11 +335,11 @@
 <body>
     <div class="container">
         <div class="card">
-            <h1>Tilgjengeleg?</h1>
+            <h1>Jeg er</h1>
             <!--<p class="subtitle">Eg er</p>-->
 
             <div class="status-display">
-                <div id="statusIndicator" class="status-indicator status-available">✓</div>
+                <div id="statusIndicator" class="status-indicator status-available" onclick="openOverridePanel()">✓</div>
                 <div id="statusText" class="status-text">Tilgjengeleg</div>
                 <div id="statusSubtext" class="status-subtext">Bank gjerne på.</div>
             </div>
@@ -291,6 +348,32 @@
                 <h3>📅 Komande møte (neste 12 timar)</h3>
                 <div id="eventList" class="event-list"></div>
             </div>
+        </div>
+    </div>
+
+    <div id="overridePanel" class="override-panel" onclick="if (event.target === this) closeOverridePanel()">
+        <div class="override-box" onclick="resetOverrideTimeout()">
+            <div id="overrideStepStatus">
+                <h3>Set status</h3>
+                <div class="override-grid">
+                    <button onclick="chooseOverrideStatus('available')">✓ Tilgjengeleg</button>
+                    <button onclick="chooseOverrideStatus('busy')">● Oppteken</button>
+                    <button onclick="chooseOverrideStatus('meeting')">○ I møte</button>
+                    <button onclick="chooseOverrideStatus('lunch')">🍴 Lunsjpause</button>
+                    <button onclick="chooseOverrideStatus('away')">↗ Ute</button>
+                </div>
+                <button id="endOverrideBtn" class="override-secondary" onclick="endOverride()">↺ Avslutt overstyring</button>
+            </div>
+            <div id="overrideStepDuration" style="display: none;">
+                <h3>Kor lenge?</h3>
+                <div class="override-grid">
+                    <button onclick="setOverride(30)">30 min</button>
+                    <button onclick="setOverride(60)">1 time</button>
+                    <button onclick="setOverride(120)">2 timar</button>
+                    <button onclick="setOverride('day')">Resten av dagen</button>
+                </div>
+            </div>
+            <button class="override-secondary" onclick="closeOverridePanel()">Avbryt</button>
         </div>
     </div>
 
@@ -307,6 +390,9 @@
         };
 
         let calendarSyncInterval = null;
+        let lastEvents = null; // Siste vellukka kalenderdata (null = ingen kalender eller henting feila)
+        let pendingOverrideStatus = null;
+        let overrideTimeout = null;
 
         window.addEventListener('load', function() {
             const calendarUrl = localStorage.getItem('calendarUrl');
@@ -314,11 +400,87 @@
                 const refreshInterval = parseInt(localStorage.getItem('refreshInterval')) || 60000;
                 startCalendarSync(calendarUrl, refreshInterval);
             } else {
-                loadAndDisplayStatus();
+                render();
                 checkAutoUpdate();
                 setInterval(checkAutoUpdate, 60000);
             }
+            // Teikn på nytt jamleg, så overstyring går ut og møte startar/sluttar i tide
+            // sjølv om kalenderen berre blir henta sjeldan
+            setInterval(render, 30000);
         });
+
+        // Prioritet: overstyring på iPaden > kalender > manuell status frå innstillingar
+        function render() {
+            const override = getOverride();
+            if (override) {
+                displayStatus(override.status, `${statusMessages[override.status]} Til kl ${formatTime(new Date(override.until))}.`);
+            } else if (lastEvents) {
+                const currentEvent = getCurrentEvent(lastEvents);
+                const nextEvent = getUpcomingEvents(lastEvents, 12)[0];
+                if (currentEvent) {
+                    displayStatus('meeting', currentEvent.summary || 'I møte');
+                } else if (nextEvent) {
+                    displayStatus('available', `Neste møte kl ${formatTime(new Date(nextEvent.start))}`);
+                } else {
+                    displayStatus('available', '');
+                }
+            } else {
+                loadAndDisplayStatus();
+            }
+            if (lastEvents) displayUpcomingEvents(getUpcomingEvents(lastEvents, 12));
+        }
+
+        function getOverride() {
+            const saved = localStorage.getItem('tilgjenge-override');
+            if (!saved) return null;
+            const data = JSON.parse(saved);
+            if (new Date() >= new Date(data.until)) {
+                localStorage.removeItem('tilgjenge-override');
+                return null;
+            }
+            return data;
+        }
+
+        function openOverridePanel() {
+            pendingOverrideStatus = null;
+            document.getElementById('overrideStepStatus').style.display = 'block';
+            document.getElementById('overrideStepDuration').style.display = 'none';
+            document.getElementById('endOverrideBtn').style.display = getOverride() ? 'block' : 'none';
+            document.getElementById('overridePanel').classList.add('open');
+            resetOverrideTimeout();
+        }
+
+        function closeOverridePanel() {
+            document.getElementById('overridePanel').classList.remove('open');
+            clearTimeout(overrideTimeout);
+        }
+
+        function resetOverrideTimeout() {
+            clearTimeout(overrideTimeout);
+            overrideTimeout = setTimeout(closeOverridePanel, 15000);
+        }
+
+        function chooseOverrideStatus(status) {
+            pendingOverrideStatus = status;
+            document.getElementById('overrideStepStatus').style.display = 'none';
+            document.getElementById('overrideStepDuration').style.display = 'block';
+        }
+
+        function setOverride(minutes) {
+            const now = new Date();
+            const until = minutes === 'day'
+                ? new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1)
+                : new Date(now.getTime() + minutes * 60000);
+            localStorage.setItem('tilgjenge-override', JSON.stringify({ status: pendingOverrideStatus, until: until.toISOString() }));
+            closeOverridePanel();
+            render();
+        }
+
+        function endOverride() {
+            localStorage.removeItem('tilgjenge-override');
+            closeOverridePanel();
+            render();
+        }
 
         function loadAndDisplayStatus() {
             const saved = localStorage.getItem('tilgjenge-status');
@@ -366,7 +528,7 @@
                 data.autoUntil = '';
                 data.autoReturn = '';
                 localStorage.setItem('tilgjenge-status', JSON.stringify(data));
-                loadAndDisplayStatus();
+                render();
             }
         }
 
@@ -398,26 +560,14 @@
 
                 if (!icsData.includes('BEGIN:VCALENDAR')) throw new Error('Ugyldig ICS-format');
 
-                const events = parseICS(icsData, 12);
-                const currentEvent = getCurrentEvent(events);
-                const upcomingEvents = getUpcomingEvents(events, 12);
-
-                if (currentEvent) {
-                    displayStatus('meeting', currentEvent.summary || 'I møte');
-                } else {
-                    const nextEvent = upcomingEvents[0];
-                    if (nextEvent) {
-                        displayStatus('available', `Neste møte kl ${formatTime(new Date(nextEvent.start))}`);
-                    } else {
-                        displayStatus('available', '');
-                    }
-                }
-
-                displayUpcomingEvents(upcomingEvents);
+                // 24 timar så render() har data for heile 12-timarsvindauget mellom hentingane
+                lastEvents = parseICS(icsData, 24);
+                render();
             } catch (error) {
                 console.error('Calendar sync error:', error);
                 // Fall back to manual status
-                loadAndDisplayStatus();
+                lastEvents = null;
+                render();
                 
                 // Show error in console but don't alert user
                 console.warn('Kunne ikkje hente kalenderdata. Brukar manuell status i staden.');
