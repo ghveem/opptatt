@@ -110,7 +110,7 @@ Korleis få ICS-URL:
 | Status | Farge | Melding |
 |--------|-------|---------|
 | Eg er tilgjengeleg | 🟢 | Bank på og vent på svar. |
-| Eg er i møte | 🔵 | Ikkje forstyrr – kom igjen etter møtet. |
+| Eg er i møte | 🔴 | Ikkje forstyrr – kom igjen etter møtet. |
 | Eg er oppteken | 🔴 | Ikkje forstyrr. |
 | Eg har lunsjpause | 🔵 | Kom igjen seinare. |
 | Eg er ikkje her no | 🟡 | Send ei melding på Teams. |
