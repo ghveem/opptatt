@@ -14,7 +14,7 @@ Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.app
 
 ## ✨ Funksjonar
 
-- 🟢 **Fire statusar**: Tilgjengeleg, Oppteken, I møte, Ute
+- 🟢 **Fem statusar**: tilgjengeleg, i møte, oppteken, lunsjpause, ikkje her no
 - 📅 **Komande møte** - Viser dei neste 12 timane
 - 🔄 **Outlook-synk** - Automatisk frå delt kalender, inkl. gjentakande møte
 - ⏰ **Tidsstyrt** - Automatisk statusendring
@@ -50,7 +50,7 @@ Innstillingar (same iPad, via ⚙️-knappen): https://dittbrukarnamn.github.io/
 
 ### Overstyre status på iPaden
 1. Trykk på statussirkelen
-2. Vel status (Tilgjengeleg, Oppteken, I møte, Lunsjpause, Ute)
+2. Vel status (tilgjengeleg, oppteken, i møte, lunsjpause, ikkje her no)
 3. Vel kor lenge: 30 min, 1 time, 2 timar eller resten av dagen
 4. Når tida er ute, tek kalenderen (eller manuell status) over att av seg sjølv
 
@@ -108,10 +108,11 @@ Korleis få ICS-URL:
 
 | Status | Farge | Melding |
 |--------|-------|---------|
-| Tilgjengeleg | 🟢 | Bank gjerne på. |
-| Oppteken | 🔴 | Ikkje forstyrr. |
-| I møte | 🔵 | Prøv igjen etter møtet. |
-| Ute | 🟡 | Send gjerne ein e-post. |
+| Eg er tilgjengeleg | 🟢 | Bank på og vent på svar. |
+| Eg er i møte | 🔵 | Ikkje forstyrr – kom igjen etter møtet. |
+| Eg er oppteken | 🔴 | Ikkje forstyrr. |
+| Eg har lunsjpause | 🔵 | Kom igjen seinare. |
+| Eg er ikkje her no | 🟡 | Send ei melding på Teams. |
 
 ## 🆘 Feilsøking
 

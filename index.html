@@ -335,13 +335,13 @@
 <body>
     <div class="container">
         <div class="card">
-            <h1>Eg er</h1>
+            <h1 id="statusVerb">Eg er</h1>
             <!--<p class="subtitle">Eg er</p>-->
 
             <div class="status-display">
                 <div id="statusText" class="status-text">tilgjengeleg</div>
                 <div id="statusIndicator" class="status-indicator status-available" onclick="openOverridePanel()">✓</div>
-                <div id="statusSubtext" class="status-subtext">Bank gjerne på.</div>
+                <div id="statusSubtext" class="status-subtext">Bank på og vent på svar.</div>
             </div>
 
             <div id="upcomingEvents" class="upcoming-events" style="display: none;">
@@ -360,7 +360,7 @@
                     <button onclick="chooseOverrideStatus('busy')">● Oppteken</button>
                     <button onclick="chooseOverrideStatus('meeting')">○ I møte</button>
                     <button onclick="chooseOverrideStatus('lunch')">🍴 Lunsjpause</button>
-                    <button onclick="chooseOverrideStatus('away')">↗ Ute</button>
+                    <button onclick="chooseOverrideStatus('away')">↗ Ikkje her no</button>
                 </div>
                 <button id="endOverrideBtn" class="override-secondary" onclick="endOverride()">↺ Avslutt overstyring</button>
             </div>
@@ -382,11 +382,11 @@
 
     <script>
         const statusMessages = {
-            available: 'Bank gjerne på.',
-            busy: 'Ikkje forstyrr, eg er djupt konsentrert.',
-            meeting: 'Prøv igjen, etter at møtet er avslutta.',
-            lunch: 'På lunsjpause.',
-            away: 'Ute frå kontoret. Send gjerne ein e-post.'
+            available: 'Bank på og vent på svar.',
+            busy: 'Ikkje forstyrr.',
+            meeting: 'Ikkje forstyrr – kom igjen etter møtet.',
+            lunch: 'Kom igjen seinare.',
+            away: 'Send ei melding på Teams.'
         };
 
         let calendarSyncInterval = null;
@@ -418,9 +418,9 @@
                 const currentEvent = getCurrentEvent(lastEvents);
                 const nextEvent = getUpcomingEvents(lastEvents, 12)[0];
                 if (currentEvent) {
-                    displayStatus('meeting', currentEvent.summary || 'I møte');
+                    displayStatus('meeting', '');
                 } else if (nextEvent) {
-                    displayStatus('available', `Neste møte kl ${formatTime(new Date(nextEvent.start))}`);
+                    displayStatus('available', `${statusMessages.available} Neste møte kl ${formatTime(new Date(nextEvent.start))}.`);
                 } else {
                     displayStatus('available', '');
                 }
@@ -434,7 +434,7 @@
             const saved = localStorage.getItem('tilgjenge-override');
             if (!saved) return null;
             const data = JSON.parse(saved);
-            if (new Date() >= new Date(data.until)) {
+            if (new Date() >= new Date(data.until) || !statusMessages[data.status]) {
                 localStorage.removeItem('tilgjenge-override');
                 return null;
             }
@@ -503,14 +503,15 @@
                 available: { class: 'status-available', icon: '✓', text: 'tilgjengeleg' },
                 busy: { class: 'status-busy', icon: '●', text: 'oppteken' },
                 meeting: { class: 'status-meeting', icon: '○', text: 'i møte' },
-                lunch: { class: 'status-meeting', icon: '🍴', text: 'på lunsj' },
-                away: { class: 'status-away', icon: '↗', text: 'ute' }
+                lunch: { class: 'status-meeting', icon: '🍴', text: 'lunsjpause', verb: 'Eg har' },
+                away: { class: 'status-away', icon: '↗', text: 'ikkje her no' }
             };
 
             const config = statusConfig[status] || statusConfig.available;
             indicator.className = 'status-indicator ' + config.class;
             indicator.textContent = config.icon;
             statusText.textContent = config.text;
+            document.getElementById('statusVerb').textContent = config.verb || 'Eg er';
             statusSubtext.textContent = message;
         }
 

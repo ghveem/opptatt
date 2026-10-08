@@ -258,7 +258,7 @@
                 <button class="quick-btn" onclick="setStatus('available')">✓ Tilgjengeleg</button>
                 <button class="quick-btn" onclick="setStatus('busy')">● Oppteken</button>
                 <button class="quick-btn" onclick="setStatus('meeting')">○ I møte</button>
-                <button class="quick-btn" onclick="setStatus('away')">↗ Ute</button>
+                <button class="quick-btn" onclick="setStatus('away')">↗ Ikkje her no</button>
             </div>
 
             <div class="control-group">
@@ -268,7 +268,7 @@
                     <option value="busy">Oppteken</option>
                     <option value="meeting">I møte</option>
                     <option value="lunch">Lunsjpause</option>
-                    <option value="away">Ute frå kontoret</option>
+                    <option value="away">Ikkje her no</option>
                 </select>
             </div>
 
@@ -349,11 +349,11 @@
 
     <script>
         const statusMessages = {
-            available: 'Bank gjerne på.',
-            busy: 'Ikkje forstyrr., eg er djupt konsentrert',
-            meeting: 'Prøv igjen, etter at møtet er avslutta',
-            lunch: 'På lunsjpause',
-            away: 'Ute frå kontoret. Send gjerne ein e-post.'
+            available: 'Bank på og vent på svar.',
+            busy: 'Ikkje forstyrr.',
+            meeting: 'Ikkje forstyrr – kom igjen etter møtet.',
+            lunch: 'Kom igjen seinare.',
+            away: 'Send ei melding på Teams.'
         };
 
         window.addEventListener('load', function() {
@@ -388,7 +388,7 @@
                 if (btn.textContent.includes('Tilgjengeleg') && activeStatus === 'available') btn.classList.add('active');
                 if (btn.textContent.includes('Oppteken') && activeStatus === 'busy') btn.classList.add('active');
                 if (btn.textContent.includes('I møte') && activeStatus === 'meeting') btn.classList.add('active');
-                if (btn.textContent.includes('Ute') && activeStatus === 'away') btn.classList.add('active');
+                if (btn.textContent.includes('Ikkje her no') && activeStatus === 'away') btn.classList.add('active');
             });
         }
 
