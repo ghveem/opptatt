@@ -6,15 +6,18 @@ Laga for å bli vist på ein [iPad i begrensa tilgangsmodus](https://support.app
 ## 📋 To separate sider
 
 1. **index.html** - Hovudvisning (viser status)
-2. **innstillingar.html** - Kontrollpanel (endre status eksternt)
+2. **innstillingar.html** - Kontrollpanel (opnast på same eining som hovudvisninga)
+
+> ⚠️ **Viktig:** Alle innstillingar blir lagra i nettlesaren (`localStorage`) på eininga du brukar.
+> Endringar gjort på telefonen kjem **ikkje** fram til iPaden. Vil du at statusen skal endre seg
+> utan at du rører iPaden, bruk Outlook-synk – då hentar iPaden statusen frå kalenderen din.
 
 ## ✨ Funksjonar
 
 - 🟢 **Fire statusar**: Tilgjengeleg, Oppteken, I møte, Ute
 - 📅 **Komande møte** - Viser dei neste 12 timane
-- 🔄 **Outlook-synk** - Automatisk frå delt kalender
+- 🔄 **Outlook-synk** - Automatisk frå delt kalender, inkl. gjentakande møte
 - ⏰ **Tidsstyrt** - Automatisk statusendring
-- 📱 **Ekstern kontroll** - Endre frå telefon/datamaskin
 - 🎨 **Kvinnherad-design** - Vakre fjord- og fjellfargar
 
 ## Demo ##
@@ -33,7 +36,7 @@ Sjå https://ghveem.github.io/opptatt/
 ### 2. Bruk
 ```
 Hovudvisning (iPad): https://dittbrukarnamn.github.io/opptatt/
-Innstillingar (telefon): https://dittbrukarnamn.github.io/opptatt/innstillingar.html
+Innstillingar (same iPad, via ⚙️-knappen): https://dittbrukarnamn.github.io/opptatt/innstillingar.html
 ```
 
 ## 📱 Oppsett
@@ -44,16 +47,15 @@ Innstillingar (telefon): https://dittbrukarnamn.github.io/opptatt/innstillingar.
 3. [Konfigurer Guided Access for kiosk-modus på ein iPad](https://support.apple.com/no-no/guide/ipad/ipada16d1374/ipados) 
 4. Monter utanfor kontoret
 
-### Ekstern kontroll (telefon/PC)
-1. Lagre innstillingarsida som bokmerke
-2. Opne når du vil endre status
-3. Vel status og lagre
-4. iPad oppdaterer seg automatisk!
+### Endre status
+1. Trykk ⚙️ nedst til høgre på iPaden (krev at du går ut av Guided Access)
+2. Vel status og lagre
+3. Gå tilbake til statusvisinga
 
 ## 🎯 Tre bruksmåtar
 
 ### 1. Manuell (Enklast)
-- Opne innstillingarsida
+- Opne innstillingarsida på iPaden
 - Klikk på snøggknapp
 - Lagre
 
@@ -65,6 +67,15 @@ Innstillingar (telefon): https://dittbrukarnamn.github.io/opptatt/innstillingar.
 - Lim inn ICS-URL frå Outlook
 - Aktiver kalender-synk
 - Alt skjer automatisk!
+
+Kalendersynken handterer:
+- Gjentakande møte (dagleg, vekentleg, månadleg, årleg – med unntak og flytta forekomstar)
+- Avlyste møte og hendingar merka som «Ledig» blir ignorerte
+- Tider i UTC og i lokal tidssone
+
+Merk: Når kalender-synk er aktiv, overstyrer kalenderen manuell status. Viss direkte henting
+blir blokkert av CORS, blir kalender-URL-en sendt via den eksterne tenesta `api.allorigins.win`.
+Kalender-URL-en gir lesetilgang til kalenderen din, så vurder om det er greitt.
 
 ## 📅 Outlook-integrering
 
@@ -104,8 +115,8 @@ Korleis få ICS-URL:
 - Sjekk at ICS-URL er riktig
 - Test URL direkte i nettlesar
 
-**Kollegaer ser ikkje oppdatering:**
-- Be dei oppdatere sida
+**Endra status på telefonen, men iPaden viser gammal status:**
+- Det er forventa – innstillingar blir lagra per eining. Endre på iPaden, eller bruk kalender-synk.
 
 ## 📝 Lisens
 
