@@ -126,6 +126,14 @@
 
         .status-available { background: linear-gradient(135deg, var(--status-available) 0%, #6AC5A3 100%); }
         .status-busy { background: linear-gradient(135deg, var(--status-busy) 0%, #E2645A 100%); color: white; }
+        /* Stoppskilt: kvit vassrett strek på raud sirkel */
+        .status-stop::before {
+            content: '';
+            width: 60%;
+            height: 16%;
+            border-radius: 8px;
+            background: white;
+        }
         .status-lunch { background: linear-gradient(135deg, var(--status-lunch) 0%, #7AA8D1 100%); }
         .status-away { background: linear-gradient(135deg, var(--status-away) 0%, #F8C563 100%); }
 
@@ -307,8 +315,8 @@
                 <h3>Set status</h3>
                 <div class="override-grid">
                     <button onclick="chooseOverrideStatus('available')">✓ Tilgjengeleg</button>
-                    <button onclick="chooseOverrideStatus('busy')">● Oppteken</button>
-                    <button onclick="chooseOverrideStatus('meeting')">○ I møte</button>
+                    <button onclick="chooseOverrideStatus('busy')">⛔ Oppteken</button>
+                    <button onclick="chooseOverrideStatus('meeting')">⛔ I møte</button>
                     <button onclick="chooseOverrideStatus('lunch')">🍴 Lunsjpause</button>
                     <button onclick="chooseOverrideStatus('away')">↗ Ikkje her no</button>
                 </div>
@@ -459,8 +467,8 @@
 
             const statusConfig = {
                 available: { class: 'status-available', icon: '✓', text: 'tilgjengeleg' },
-                busy: { class: 'status-busy', icon: '●', text: 'oppteken' },
-                meeting: { class: 'status-busy', icon: '○', text: 'i møte' },
+                busy: { class: 'status-busy status-stop', icon: '', text: 'oppteken' },
+                meeting: { class: 'status-busy status-stop', icon: '', text: 'i møte' },
                 lunch: { class: 'status-lunch', icon: '🍴', text: 'lunsjpause', verb: 'Eg har' },
                 away: { class: 'status-away', icon: '↗', text: 'ikkje her no' }
             };
