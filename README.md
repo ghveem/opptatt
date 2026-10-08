@@ -51,7 +51,7 @@ Innstillingar (same iPad, langt trykk på sirkelen): https://dittbrukarnamn.gith
 1. Trykk på statussirkelen
 2. Vel status (tilgjengeleg, oppteken, i møte, lunsjpause, ikkje her no)
 3. Vel kor lenge: 30 min, 1 time, 2 timar eller resten av dagen
-4. Når tida er ute, tek kalenderen (eller manuell status) over att av seg sjølv
+4. Når tida er ute, tek kalenderen (eller standardstatusen) over att av seg sjølv
 
 Overstyringa går føre kalenderen. Vil du avslutte ho tidleg, trykk på sirkelen og vel «↺ Avslutt overstyring».
 Panelet lukkar seg sjølv etter 15 sekund utan trykk. Dette fungerer i Guided Access.
@@ -61,12 +61,12 @@ Trykk på statussirkelen og vel «⚙️ Innstillingar», eller hald fingeren p�
 Det finst ingen synleg innstillingsknapp, så forbipasserande kjem ikkje til innstillingane ved eit uhell.
 
 **Tilpassa melding:** Tekst du skriv i «Tilpassa melding» blir vist etter standardteksten, til dømes
-«Ikkje forstyrr. Tilbake måndag.». Han blir vist same om kalenderen, ei overstyring eller manuell status styrer.
+«Ikkje forstyrr. Tilbake måndag.». Han blir vist same om kalenderen, ei overstyring eller standardstatusen styrer.
 Tøm feltet og lagre for å fjerne han.
 
 ## 🎯 To bruksmåtar
 
-### 1. Manuell (Enklast)
+### 1. Standardstatus (Enklast)
 - Opne innstillingarsida på iPaden
 - Klikk på snøggknapp
 - Lagre
@@ -81,11 +81,11 @@ Kalendersynken handterer:
 - Avlyste møte og hendingar merka som «Ledig» blir ignorerte
 - Tider i UTC og i lokal tidssone
 
-Merk: Når kalender-synk er aktiv, overstyrer kalenderen manuell status. Viss direkte henting
+Merk: Når kalender-synk er aktiv, overstyrer kalenderen standardstatusen. Viss direkte henting
 blir blokkert av CORS, blir kalender-URL-en sendt via den eksterne tenesta `api.allorigins.win`.
 Kalender-URL-en gir lesetilgang til kalenderen din, så vurder om det er greitt.
 
-Viss kalenderen ikkje kan hentast, viser skjermen manuell status med varselet
+Viss kalenderen ikkje kan hentast, viser skjermen standardstatusen med varselet
 «⚠️ Får ikkje kontakt med kalenderen – statusen kan vere utdatert.»
 
 ## 📅 Outlook-integrering

@@ -245,7 +245,8 @@
 
         <!-- Manual Status Control -->
         <div class="card">
-            <h2 class="section-title">Manuell status</h2>
+            <h2 class="section-title">Standardstatus</h2>
+            <p class="help-text" style="margin-bottom: 1.5rem;">Blir vist når kalender-synk er av, eller når kalenderen ikkje svarar.</p>
 
             <div class="quick-buttons">
                 <button class="quick-btn" onclick="setStatus('available')">✓ Tilgjengeleg</button>
@@ -253,17 +254,6 @@
                 <button class="quick-btn" onclick="setStatus('busy')">⛔ Oppteken</button>
                 <button class="quick-btn" onclick="setStatus('lunch')">🍴 Lunsjpause</button>
                 <button class="quick-btn" onclick="setStatus('away')">↗ Ikkje her no</button>
-            </div>
-
-            <div class="control-group">
-                <label for="statusSelect">Vel status:</label>
-                <select id="statusSelect" onchange="updatePreview()">
-                    <option value="available">Tilgjengeleg</option>
-                    <option value="meeting">I møte</option>
-                    <option value="busy">Oppteken</option>
-                    <option value="lunch">Lunsjpause</option>
-                    <option value="away">Ikkje her no</option>
-                </select>
             </div>
 
             <div class="control-group">
@@ -336,6 +326,8 @@
             away: 'Send ei melding på Teams.'
         };
 
+        let selectedStatus = 'available';
+
         window.addEventListener('load', function() {
             loadSettings();
         });
@@ -344,10 +336,10 @@
             const saved = localStorage.getItem('tilgjenge-status');
             if (saved) {
                 const data = JSON.parse(saved);
-                document.getElementById('statusSelect').value = data.status || 'available';
+                selectedStatus = data.status || 'available';
                 document.getElementById('customMessage').value = data.customMessage || '';
-                updateQuickButtons(data.status || 'available');
             }
+            updateQuickButtons(selectedStatus);
 
             const calendarUrl = localStorage.getItem('calendarUrl');
             const refreshInterval = localStorage.getItem('refreshInterval');
@@ -356,7 +348,7 @@
         }
 
         function setStatus(status) {
-            document.getElementById('statusSelect').value = status;
+            selectedStatus = status;
             updateQuickButtons(status);
         }
 
@@ -371,13 +363,9 @@
             });
         }
 
-        function updatePreview() {
-            updateQuickButtons(document.getElementById('statusSelect').value);
-        }
-
         function saveManualStatus() {
             const data = {
-                status: document.getElementById('statusSelect').value,
+                status: selectedStatus,
                 customMessage: document.getElementById('customMessage').value,
                 timestamp: new Date().toISOString()
             };
@@ -482,7 +470,7 @@
             localStorage.removeItem('calendarUrl');
             localStorage.removeItem('refreshInterval');
 
-            document.getElementById('statusSelect').value = 'available';
+            selectedStatus = 'available';
             document.getElementById('customMessage').value = '';
             document.getElementById('calendarUrl').value = '';
             updateQuickButtons('available');
