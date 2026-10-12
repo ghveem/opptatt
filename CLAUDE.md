@@ -16,7 +16,7 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 
 ## Fallgruver
 
-- Alt blir lagra i `localStorage` på eininga (`calendarUrl`, `refreshInterval`, `tilgjenge-override`). Endringar på ein annan eining slår ikkje gjennom på iPaden
+- Alt blir lagra i `localStorage` på eininga (`calendarUrl`, `refreshInterval`, `tilgjenge-override`, `tilgjenge-status`). Endringar på ein annan eining slår ikkje gjennom på iPaden
 - ICS-URL-en gir lesetilgang til kalenderen. Ikkje legg han i repoet eller i commit-meldingar
 - Ved CORS-feil går henting via den eksterne tenesta `api.allorigins.win`. Dokumenter endringar her i README.md
 - ICS-parsinga handterer gjentakande møte, unntak, flytta forekomstar, avlyste møte og «Ledig». Test med gjentakande møte etter endringar
