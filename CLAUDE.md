@@ -12,7 +12,7 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 
 - `index.html`: hovudvisning med statussirkel, overstyring (trykk på sirkelen) og kalenderhenting. All JS og CSS ligg i fila
 - `innstillingar.html`: kalender-URL (ICS), standardstatus, tilpassa melding. Opnast med langt trykk (1,5 s) eller via overstyringspanelet
-- `CORS_FEILSØKING.md`: notat om feilsøking av kalenderhenting
+- `CORS_FEILSØKING.md`: notat om feilsøking av kalenderhenting. Delane om automatisk proxy (AllOrigins) er utdaterte, proxyen er fjerna
 
 ## Fallgruver
 
