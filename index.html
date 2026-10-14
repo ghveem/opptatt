@@ -507,22 +507,9 @@
         async function fetchCalendarStatus(calendarUrl) {
             showSyncIndicator();
             try {
-                // Try direct fetch first
-                let response;
-                let icsData;
-                
-                try {
-                    response = await fetch(calendarUrl);
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    icsData = await response.text();
-                } catch (corsError) {
-                    // If CORS error, try with proxy
-                    console.log('Direct fetch failed, trying with CORS proxy...');
-                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(calendarUrl);
-                    response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error('Proxy HTTP ' + response.status);
-                    icsData = await response.text();
-                }
+                const response = await fetch(calendarUrl);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const icsData = await response.text();
 
                 if (!icsData.includes('BEGIN:VCALENDAR')) throw new Error('Ugyldig ICS-format');
 
