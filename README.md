@@ -81,11 +81,11 @@ Kalendersynken handterer:
 - Avlyste møte og hendingar merka som «Ledig» blir ignorerte
 - Tider i UTC og i lokal tidssone
 
-Merk: Når kalender-synk er aktiv, overstyrer kalenderen standardstatusen. Viss direkte henting
-blir blokkert av CORS, blir kalender-URL-en sendt via den eksterne tenesta `api.allorigins.win`.
-Kalender-URL-en gir lesetilgang til kalenderen din, så vurder om det er greitt.
+Merk: Når kalender-synk er aktiv, overstyrer kalenderen standardstatusen. Kalenderen blir henta direkte
+frå Outlook. Det blir ikkje brukt noka mellomteneste, så kalender-URL-en blir ikkje sendt til tredjepart.
+Kalender-URL-en gir lesetilgang til kalenderen din, så ikkje del han vidare.
 
-Viss kalenderen ikkje kan hentast, viser skjermen standardstatusen med varselet
+Viss kalenderen ikkje kan hentast (til dømes ved CORS-blokkering), viser skjermen standardstatusen med varselet
 «⚠️ Får ikkje kontakt med kalenderen – statusen kan vere utdatert.»
 
 ## 📅 Outlook-integrering

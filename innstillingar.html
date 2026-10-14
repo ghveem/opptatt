@@ -305,7 +305,7 @@
                     <li>Lim inn her</li>
                 </ol>
                 <p style="margin-top: 0.75rem;"><strong>Viktig:</strong> Når kalender-synk er aktivert, vil manuell status bli overstyrt av kalenderen din.</p>
-                <p style="margin-top: 0.5rem;"><strong>CORS-problem?</strong> Viss direkte tilgang ikkje fungerer, vil systemet automatisk prøve ein proxy-teneste. Dette kan ta litt lengre tid, men skal fungere.</p>
+                <p style="margin-top: 0.5rem;"><strong>CORS-problem?</strong> Viss kalenderen ikkje kan hentast direkte frå nettleseren, får du ein feilmelding under testen. Sjå CORS_FEILSØKING.md.</p>
             </div>
         </div>
 
@@ -407,23 +407,9 @@
             testResultMessage.textContent = 'Ventar på svar frå kalenderen...';
 
             try {
-                // Try direct fetch first
-                let response;
-                let icsData;
-                let method = 'direkte';
-                
-                try {
-                    response = await fetch(calendarUrl);
-                    if (!response.ok) throw new Error('Direkte tilgang feila');
-                    icsData = await response.text();
-                } catch (corsError) {
-                    // Try with proxy
-                    method = 'via proxy';
-                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(calendarUrl);
-                    response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error('Proxy-tilgang feila');
-                    icsData = await response.text();
-                }
+                const response = await fetch(calendarUrl);
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const icsData = await response.text();
 
                 // Parse to check if it's valid ICS
                 if (!icsData.includes('BEGIN:VCALENDAR')) {
@@ -436,7 +422,7 @@
                 testResult.style.borderLeftColor = '#4CAF8E';
                 testResult.style.background = 'rgba(76, 175, 142, 0.1)';
                 testResultTitle.textContent = '✅ Tilkopling vellukka!';
-                testResultMessage.textContent = `Kalenderdata blei henta ${method}. Fann ${eventCount} hendingar i kalenderen. Du kan no aktivere kalender-synk.`;
+                testResultMessage.textContent = `Kalenderdata blei henta. Fann ${eventCount} hendingar i kalenderen. Du kan no aktivere kalender-synk.`;
 
             } catch (error) {
                 testResult.style.borderLeftColor = '#D97757';
