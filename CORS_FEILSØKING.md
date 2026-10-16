@@ -11,11 +11,9 @@ Access to fetch at 'https://outlook.office365.com/...' has been blocked by CORS 
 
 ## ✅ Løysingar
 
-### Løysing 1: Automatisk proxy (Implementert)
+### Løysing 1: Direkte tilgang (Implementert)
 
-Systemet prøver no automatisk to metodar:
-1. **Direkte tilgang** (prøver først)
-2. **Proxy-tilgang** (AllOrigins.win) - fungerer i dei fleste tilfelle
+Systemet hentar kalenderen direkte frå nettlesaren. Det blir ikkje brukt proxy, så ICS-URL-en blir ikkje sendt til tredjepart. Ved CORS-feil viser systemet manuell status med varsel.
 
 **Korleis teste:**
 1. Gå til innstillingarsida
@@ -91,12 +89,11 @@ Viss ingen av løysingane fungerer:
 
 ## 🔍 Feilsøking
 
-### Problem: Proxy fungerer ikkje
+### Problem: Kalenderen blir ikkje henta
 
 **Sjekk:**
-1. Er AllOrigins.win tilgjengeleg? (Test: https://api.allorigins.win/raw?url=https://google.com)
-2. Er kalender-URL-en offentleg tilgjengeleg?
-3. Opne URL-en direkte i nettlesaren - fungerer ho?
+1. Er kalender-URL-en offentleg tilgjengeleg?
+2. Opne URL-en direkte i nettlesaren - fungerer ho?
 
 ### Problem: Ingen hendingar vises
 
@@ -166,10 +163,9 @@ Viss ingen av løysingane fungerer:
 
 **Anbefalt rekkefølgje:**
 1. Prøv direkte ICS-URL → Test
-2. Viss det feiler → Proxy blir brukt automatisk
-3. Viss det framleis feiler → Prøv Outlook Web Access URL
-4. Viss ingenting fungerer → Bruk Google Calendar mellomledd
-5. Siste utveg → Bruk manuell status og overstyring på iPaden
+2. Viss det feiler → Prøv Outlook Web Access URL
+3. Viss ingenting fungerer → Bruk Google Calendar mellomledd
+4. Siste utveg → Bruk manuell status og overstyring på iPaden
 
 **Viktigast:**
 - Test før produksjon
