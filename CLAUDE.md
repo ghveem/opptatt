@@ -2,6 +2,12 @@
 
 Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Statiske sider utan byggjesteg, publisert på GitHub Pages (https://ghveem.github.io/opptatt/). Sjå README.md for brukarrettleiing.
 
+## Formål og avgrensingar
+
+- Mål: vise tilgjenge til kollegaer på ein iPad utanfor kontoret, styrt av kalenderen, overstyring på iPaden eller standardstatus
+- Berre statiske filer i nettlesaren: ingen server, proxy eller tredjepartsteneste for kalenderhenting
+- Møtetitlar skal aldri visast, og innstillingar følgjer eininga dei er sette på
+
 ## Køyring
 
 - Ingen bygg eller avhengigheiter. Opne `index.html` og `innstillingar.html` direkte, eller server mappa, t.d. `python3 -m http.server`
