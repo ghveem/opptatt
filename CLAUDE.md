@@ -11,7 +11,7 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 ## Køyring
 
 - Ingen bygg eller avhengigheiter. Opne `index.html` og `innstillingar.html` direkte, eller server mappa, t.d. `python3 -m http.server`
-- Deploy: push til `main` trigger `.github/workflows/static.yml` (GitHub Pages)
+- Deploy: push til `main` trigger `.github/workflows/static.yml` (GitHub Pages). Workflowen publiserer heile repoet (`path: '.'`), så alt som ligg i repoet er offentleg
 - Det finst ingen testar
 
 ## Struktur
@@ -19,6 +19,7 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 - `index.html`: hovudvisning med statussirkel, overstyring (trykk på sirkelen) og kalenderhenting. All JS og CSS ligg i fila
 - `innstillingar.html`: kalender-URL (ICS), standardstatus, tilpassa melding. Opnast med langt trykk (1,5 s) eller via overstyringspanelet
 - `CORS_FEILSØKING.md`: notat om feilsøking av kalenderhenting og alternative kalenderkjelder. Hald det i samsvar med README.md og fallgruvene under
+- Statusnøklar i koden: `available`, `meeting`, `busy`, `lunch`, `away`. Kalenderen styrer berre `available` og `meeting`. Sida teiknar på nytt kvart 30. sekund og viser dei 4 neste møta (klokkeslett) innan 12 timar
 
 ## Fallgruver
 
