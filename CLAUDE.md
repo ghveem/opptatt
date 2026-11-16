@@ -27,7 +27,7 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 - ICS-URL-en gir lesetilgang til kalenderen. Ikkje legg han i repoet eller i commit-meldingar
 - Det blir ikkje brukt proxy. Kalenderen blir berre henta direkte frå nettlesaren, og ved CORS-feil viser systemet manuell status med varsel. Ikkje legg til tredjepartstenester for henting. Dokumenter endringar her i README.md
 - ICS-parsinga handterer gjentakande møte, unntak, flytta forekomstar, avlyste møte og «Ledig». Test med gjentakande møte etter endringar
-- Møtetitlar skal aldri visast på skjermen (personvern), berre klokkeslett
+- `SUMMARY` (møtetittel) blir lesen av ICS-parsaren, men skal aldri brukast i visinga (personvern)
 - Overstyring går føre kalender, og kalender går føre standardstatus
 - Panelet skal fungere i Guided Access på iPad, så unngå funksjonar som krev systemdialogar
 
