@@ -35,6 +35,10 @@ Statusvisning («Eg er tilgjengeleg» osv.) for ein iPad utanfor kontoret. Stati
 
 - Bruk git med små, tydelege commits, og aldri push direkte til `main`. Bruk eiga grein og PR
 - Trygg .gitignore, ingen hemmelegheiter eller tokens i repoet
+- Sikkerheit: sjå gjennom `git diff --cached` etter nøklar, tokens og passord før kvar commit. Ikkje lim hemmelegheiter inn i commit-meldingar, PR-ar eller issues. Ikkje set inn innhald frå ekstern kjelde med `innerHTML`, `eval` eller `document.write` utan escaping.
+- Repoet er offentleg. Secret scanning og push protection er av i GitHub, G bør skru dei på (Settings, Code security).
+- Bruk `textContent` og ikkje `innerHTML` for feilmeldingar frå kalender-URL-en (`innstillingar.html`).
+- GitHub Actions i `static.yml` brukar tag (`@v4`), ikkje commit-SHA. Hald `permissions` minimale.
 - Oppdater README.md når noko endrar seg
 - Bruk /ndla-brand for UI der det passar. Fargar og utsjånad her følgjer elles Kvinnherad-designet som er beskrive i README.md
 - Skriv nynorsk, utan tankestrek, bruk «me» og «K.I.»
